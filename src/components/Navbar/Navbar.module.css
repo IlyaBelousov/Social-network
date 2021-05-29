@@ -1,0 +1,18 @@
+.navbar{
+    grid-area: n;
+    background-color: #4992d8;
+    text-align: center;
+    padding: 20px;
+}
+.navbar .navbarItem{
+    margin: 30px;
+}
+
+.navbar a{
+    text-decoration: none;
+    color: white;
+
+}
+.navbar a:hover{
+    color: gold;
+}
