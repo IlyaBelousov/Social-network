@@ -1,13 +1,11 @@
-.dialogsContainer{
+.dialog{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: 'u' 'm';
+    grid-template-areas: 'u m';
 }
 
 
-.dialog{
-    display: flex;
-}
+
 .user{
     display: grid;
     grid-area: u;
