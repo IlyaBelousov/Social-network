@@ -1,8 +1,10 @@
 import React from 'react';
 import s from './Profile.module.css';
 import Post from './Post';
+import {messageType, ProfilePropsType} from '../../index';
 
-function Profile() {
+
+function Profile(props:ProfilePropsType) {
     return (
         <div className={s.profileCont}>
             <img
@@ -26,9 +28,9 @@ function Profile() {
                 <button>Send</button>
             </div>
             <div className={s.usersPosts}>
-                <Post message={'Hi! How are you?'}/>
-                <Post message={'How are you doing?'}/>
-                <Post message={'How is your study?'}/>
+                {
+                    props.posts.post.map((p:messageType)=><Post id={p.id} message={p.message}/>)
+                }
             </div>
         </div>
     );

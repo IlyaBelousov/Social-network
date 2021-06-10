@@ -13,6 +13,6 @@
     color: white;
 
 }
-.navbar a:hover{
+.navbarItem .active{
     color: gold;
 }

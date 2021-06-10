@@ -9,9 +9,16 @@
 .user{
     display: grid;
     grid-area: u;
+    text-decoration: none;
+    color: black;
 }
 .message{
     display: grid;
     grid-area: m;
 
 }
+.dialogItem .active{
+    color: gold;
+}
+
+
