@@ -1,43 +1,52 @@
-.profileCont{
+.profileCont {
     grid-area: p;
     background-color: #fdfdfd;
 
 }
-.profileCont img{
+
+.profileCont .mainImage {
     height: 150px;
     width: 100%;
 
 }
-.profileInformation{
+
+.profileInformation {
     margin-bottom: 10px;
+    position: relative;
+    padding: 10px;
 
 }
-.profileInformation .avatar{
-    height: 160px;
-    width: 130px;
+
+.profileImage {
+    height: 140px;
+    width: 120px;
     float: left;
     margin-top: 10px;
     margin-right: 10px;
 }
-.person{
-    margin-top: 10px;
-    margin-left: 10px;
+
+.person {
+    padding: 5px;
+
 
 }
-.personDescription{
+
+.personDescription {
     margin-bottom: 10px;
 }
-.posts{
-    margin:100px 0 5px 30px;
+
+.posts {
+    margin: 100px 0 5px 30px;
 }
-.newPost{
+
+.newPost {
     display: block;
     margin-left: 10px;
     margin-bottom: 30px;
     height: 80px;
 }
 
-.newPost textarea{
+.newPost textarea {
     margin-top: 10px;
     width: 100%;
     height: 40px;
@@ -48,7 +57,8 @@
     resize: none;
 
 }
-.newPost button{
+
+.newPost button {
     width: 110px;
     height: 43px;
     border: 1px solid;
@@ -57,18 +67,14 @@
     margin-top: 10px;
     margin-left: 20px;
 }
-.usersPosts{
+
+.usersPosts {
     margin-top: 50px;
 }
-.postItem{
+
+.postItem {
     margin-top: 30px;
     display: flex;
+}
 
 
-}
-.postItem img{
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    margin-right: 10px;
-}

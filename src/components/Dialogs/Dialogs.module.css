@@ -1,24 +1,58 @@
-.dialog{
+.dialogsContainer {
+    position: relative;
+    height: 400px;
+}
+
+.addMessage {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: flex-end
+
+}
+
+.addMessage textarea {
+    width: 500px;
+    height: 40px;
+    margin-left: 100px;
+    resize: none;
+
+
+}
+
+.addMessage button {
+    width: 80px;
+    height: 45px;
+    bottom: 0;
+    margin-left: 10px;
+
+}
+
+.dialog {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas: 'u m';
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
 
-
-.user{
+.user {
     display: grid;
     grid-area: u;
     text-decoration: none;
     color: black;
 }
-.message{
+
+.message {
     display: grid;
     grid-area: m;
 
 }
-.dialogItem .active{
+
+.dialogItem .active {
     color: gold;
+    font-size: 1.5em;
 }
 
 

@@ -1,0 +1,16 @@
+.userBlock {
+    display: flex;
+    align-items: stretch;
+    margin-right: 20px;
+}
+
+.userAvatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.userName {
+
+}
