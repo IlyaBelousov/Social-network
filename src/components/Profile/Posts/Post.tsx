@@ -1,6 +1,6 @@
 import React from 'react';
 import s from '../Profile.module.css';
-import {messageType} from '../../../state';
+import {messageType} from '../../../redux/state';
 import User from '../../Users/User';
 
 

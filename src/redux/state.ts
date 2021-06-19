@@ -1,4 +1,4 @@
-import {rerenderEntireTree} from './rerender';
+import {rerenderEntireTree} from '../rerender';
 
 export type DialogItemType = {
     id: number

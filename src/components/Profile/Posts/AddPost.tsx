@@ -1,4 +1,4 @@
-import React, {createRef, LegacyRef} from 'react';
+import React, {createRef, KeyboardEvent, RefObject} from 'react';
 import s from '../Profile.module.css';
 
 type AddPostType = {
@@ -6,19 +6,25 @@ type AddPostType = {
 }
 
 const AddPost = (props: AddPostType) => {
-    let addedPost: LegacyRef<HTMLTextAreaElement> | undefined = createRef();
+    let addedPost: RefObject<HTMLInputElement> = createRef();
     let createPost = () => {
-        // @ts-ignore
-        let text = addedPost.current.value;
+        let text = addedPost.current!.value;
+        if(text.trim()===''){
+            return
+        }
         props.addNewPost(text);
-        // @ts-ignore
-        addedPost.current.value='';
+        addedPost.current!.value = '';
+    };
 
+    const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            createPost()
+        }
     };
 
     return (
         <div className={s.newPost}>
-            <textarea ref={addedPost} placeholder="New Post"/>
+            <input onKeyPress={onKeyPressHandler} ref={addedPost} placeholder="New Post"/>
             <button onClick={createPost}>Send</button>
         </div>
     );

@@ -1,6 +1,9 @@
 import React from 'react';
 import s from '../Profile.module.css';
 
+
+
+
 const MyPost = () => {
     return (
         <div className={s.posts}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Dialogs.module.css';
-import {DialogItemType, DialogType} from '../../state';
+import {DialogItemType, DialogType} from '../../redux/state';
 import {NavLink} from 'react-router-dom';
 import User from '../Users/User';
 import Message from './Message';
@@ -10,15 +10,16 @@ const Dialogs = (props: DialogType) => {
     return (
         <div className={s.dialogsContainer}>
             {
-                props.DialogsData.map((t: DialogItemType) => <DialogItem id={t.id} message={t.message}
-                                                                         username={t.username}/>)
+                props.DialogsData
+                    .map((t: DialogItemType) =>
+                        <DialogItem id={t.id}
+                                    message={t.message}
+                                    username={t.username}/>)
             }
             <div className={s.addMessage}>
                 <textarea></textarea>
                 <button>Send</button>
             </div>
-
-
         </div>
     );
 };
@@ -34,8 +35,6 @@ export function DialogItem(props: DialogItemType) {
                     name={props.username}/></NavLink>
             </div>
             <Message message={props.message}/>
-
-
         </div>
     );
 }

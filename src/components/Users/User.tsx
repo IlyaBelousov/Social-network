@@ -3,9 +3,7 @@ import s from './User.module.css';
 
 type UserPropsType = {
     name: string
-
 }
-
 
 const User = (props: UserPropsType) => {
     return (
