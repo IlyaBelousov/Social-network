@@ -1,13 +1,18 @@
 import React from 'react';
 import s from './Profile.module.css';
 import Post from './Posts/Post';
-import {messageType, ProfilePropsType} from '../../redux/state';
+import {messageType, PostsType, ProfilePropsType} from '../../redux/state';
 import ProfileInfo from './ProfileInfo';
 import AddPost from './Posts/AddPost';
 import MyPost from './Posts/MyPost';
 
+type ProfileType={
+    addNewPost:(postMessage: string) =>void
+    posts:PostsType
+    ChangeNewPostText: (newText: string) =>void
+}
 
-function Profile(props: ProfilePropsType) {
+function Profile(props:ProfileType) {
     return (
         <div className={s.profileCont}>
             <img className={s.mainImage}
@@ -15,7 +20,7 @@ function Profile(props: ProfilePropsType) {
 
             <ProfileInfo/>
             <MyPost />
-            <AddPost addNewPost={props.addNewPost}/>
+            <AddPost ChangeNewPostText={props.ChangeNewPostText} newPostText={props.posts.newPostText} addNewPost={props.addNewPost}/>
 
             <div className={s.usersPosts}>
                 {

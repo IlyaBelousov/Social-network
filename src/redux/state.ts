@@ -1,4 +1,8 @@
-import {rerenderEntireTree} from '../rerender';
+import {rerenderEntireTree} from '../index';
+
+export const subcribe = (observer: () => void) => {
+    observer();
+};
 
 export type DialogItemType = {
     id: number
@@ -10,10 +14,11 @@ export type DialogType = {
 }
 export type ProfilePropsType = {
     posts: PostsType
-    addNewPost:(postMessage: string)=>void
+
 }
 export type PostsType = {
     post: Array<messageType>
+    newPostText: string
 }
 export type messageType = {
     id: number
@@ -39,13 +44,10 @@ let stateRoot: StateRootType = {
                     {id: 1, username: 'Liza', message: 'Hey! How are you?'},
                     {id: 2, username: 'Denchik', message: 'Hey! How are you?'},
                     {id: 3, username: 'Leo', message: 'Hey! How are you?'}
-                ]
+                ],
+                newPostText: ''
             },
-            addNewPost:(postMessage: string)=>{
-                let newPost = {id: 6, message: postMessage, username: 'Htoto'};
-                stateRoot.state.profile.posts.post.unshift(newPost);
-                rerenderEntireTree();
-            }
+
 
         },
         dialog: {
@@ -59,7 +61,15 @@ let stateRoot: StateRootType = {
     }
 };
 
-
+export const addNewPost = (postMessage: string) => {
+    let newPost = {id: 6, message: postMessage, username: 'Htoto'};
+    stateRoot.state.profile.posts.post.unshift(newPost);
+    subcribe(rerenderEntireTree)
+};
+export const ChangeNewPostText = (newText: string) => {
+    stateRoot.state.profile.posts.newPostText = newText;
+    subcribe(rerenderEntireTree)
+};
 
 
 export default stateRoot;
