@@ -1,8 +1,7 @@
-import {rerenderEntireTree} from '../index';
-
-export const subcribe = (observer: () => void) => {
-    observer();
+let rerenderEntireTree = () => {
+    console.log('Error');
 };
+
 
 export type DialogItemType = {
     id: number
@@ -64,11 +63,14 @@ let stateRoot: StateRootType = {
 export const addNewPost = (postMessage: string) => {
     let newPost = {id: 6, message: postMessage, username: 'Htoto'};
     stateRoot.state.profile.posts.post.unshift(newPost);
-    subcribe(rerenderEntireTree)
+    rerenderEntireTree();
 };
 export const ChangeNewPostText = (newText: string) => {
     stateRoot.state.profile.posts.newPostText = newText;
-    subcribe(rerenderEntireTree)
+    rerenderEntireTree();
+};
+export const subscribe = (observer: () => void) => {
+    rerenderEntireTree = observer;
 };
 
 

@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import App from './App';
-import stateRoot, {addNewPost, ChangeNewPostText, subcribe} from './redux/state';
+import stateRoot, {addNewPost, ChangeNewPostText, subscribe} from './redux/state';
 import {BrowserRouter} from 'react-router-dom';
 import './index.css';
 
@@ -18,10 +18,10 @@ export let rerenderEntireTree = () => {
     );
 };
 
+rerenderEntireTree();
 
 
-subcribe(rerenderEntireTree);
-
+subscribe(rerenderEntireTree);
 
 
 // If you want to start measuring performance in your app, pass a function
