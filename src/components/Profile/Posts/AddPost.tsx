@@ -1,6 +1,6 @@
-import React, {ChangeEvent, createRef, KeyboardEvent, RefObject} from 'react';
+import React, {ChangeEvent, createRef, KeyboardEvent} from 'react';
 import s from '../Profile.module.css';
-import stateRoot from '../../../redux/state';
+
 
 type AddPostType = {
     addNewPost: (postMessage: string) => void
@@ -11,17 +11,21 @@ type AddPostType = {
 const AddPost = (props: AddPostType) => {
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        props.ChangeNewPostText(event.currentTarget.value)
+        props.ChangeNewPostText(event.currentTarget.value);
 
     };
-    let addedPost: RefObject<HTMLInputElement> = createRef();
+    let addedPost = createRef<HTMLInputElement>();
     let createPost = () => {
-        let text = addedPost.current!.value;
-        if (text.trim() === '') {
-            return;
+
+        let text = addedPost.current?.value;
+        if (text) {
+            if (text.trim() === '') {
+                return;
+            }
+            props.addNewPost(text);
+            addedPost.current!.value = '';
         }
-        props.addNewPost(text);
-        addedPost.current!.value = '';
+
     };
 
     const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {

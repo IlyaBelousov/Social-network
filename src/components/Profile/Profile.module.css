@@ -55,8 +55,15 @@
     float: right;
     border: 1px solid;
     resize: none;
+    padding: 4px 0;
+    outline: 0;
 
 }
+
+.newPost input {
+
+}
+
 
 .newPost button {
     width: 110px;
