@@ -1,10 +1,16 @@
 export type DialogItemType = {
     id: number
     username: string
+
+}
+export type DialogMessageType = {
+    id: number
     message: string
 }
 export type DialogType = {
-    DialogsData: Array<DialogItemType>
+    dialogs: Array<DialogItemType>
+    messages: Array<DialogMessageType>
+    newMessageText: string
 }
 export type ProfilePropsType = {
     posts: PostsType
@@ -22,8 +28,8 @@ export type messageType = {
 
 }
 export type stateType = {
-    profile: ProfilePropsType
-    dialog: DialogType
+    profilePage: ProfilePropsType
+    dialogsPage: DialogType
 
 
 }
@@ -32,14 +38,16 @@ export type StoreType = {
     addNewPost: (postMessage: string) => void
     ChangeNewPostText: (newText: string) => void
     subscribe: (observer: (state: stateType) => void) => void
-    getState:()=>stateType
-    rerenderEntireTree: (state:stateType) => void
+    getState: () => stateType
+    rerenderEntireTree: (state: stateType) => void
+    SendMessage: (message: string) => void
+    ChangeMessage: (newMessage: string) => void
 
 }
 
 export let store: StoreType = {
     _state: {
-        profile: {
+        profilePage: {
             posts: {
                 post: [
                     {id: 1, username: 'Liza', message: 'Hey! How are you?'},
@@ -50,30 +58,51 @@ export let store: StoreType = {
             },
         },
 
-        dialog: {
-            DialogsData: [
-                {id: 1, username: 'Liza', message: 'Hey'},
-                {id: 2, username: 'Denchik', message: 'Hey'},
-                {id: 3, username: 'Leo', message: 'Hey'},
-                {id: 4, username: 'Brodiyagi', message: 'Hey'}
-            ]
+        dialogsPage: {
+            dialogs: [
+                {id: 1, username: 'Liza'},
+                {id: 2, username: 'Denchik'},
+                {id: 3, username: 'Leo'},
+                {id: 4, username: 'Brodiyagi'}
+            ],
+            messages: [
+                {id: 1, message: 'Hey'},
+                {id: 2, message: 'Hey'},
+                {id: 3, message: 'Hey'},
+                {id: 4, message: 'Hey'}
+            ],
+            newMessageText: ''
         }
     },
-    getState(){
-        return this._state
+    getState() {
+        return this._state;
     },
     rerenderEntireTree() {
         console.log('Error');
     },
+    ChangeMessage(newMessage: string) {
+        this._state.dialogsPage.newMessageText = newMessage;
+        this.rerenderEntireTree(this.getState());
+
+    },
+    SendMessage(message: string) {
+        let body = this._state.dialogsPage.newMessageText;
+        let newMessage = {id: 1, message: body};
+        this._state.dialogsPage.newMessageText = '';
+        this._state.dialogsPage.messages.push(newMessage);
+        this.rerenderEntireTree(this.getState());
+
+
+    },
     addNewPost(postMessage: string) {
         let newPost = {id: 6, message: postMessage, username: 'Htoto'};
-        this._state.profile.posts.post.unshift(newPost);
+        this._state.profilePage.posts.post.unshift(newPost);
         this.rerenderEntireTree(this.getState());
 
 
     },
     ChangeNewPostText(newText: string) {
-        this._state.profile.posts.newPostText = newText;
+        this._state.profilePage.posts.newPostText = newText;
         this.rerenderEntireTree(this.getState());
 
     },
@@ -81,6 +110,9 @@ export let store: StoreType = {
         this.rerenderEntireTree = observer;
     },
 };
+
+
+
 
 
 

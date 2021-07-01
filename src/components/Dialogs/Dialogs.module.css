@@ -2,6 +2,12 @@
     position: relative;
     height: 400px;
 }
+.dialogItem{
+    display: grid;
+    grid-template-columns: 3fr 3fr;
+    grid-template-areas: 'u m';
+}
+
 
 .addMessage {
     position: absolute;
@@ -29,22 +35,23 @@
 }
 
 .dialog {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: 'u m';
+
     margin-top: 20px;
     margin-left: 20px;
 }
 
-
-.user {
+.dialogUsers{
     display: grid;
     grid-area: u;
+}
+
+.user {
+
     text-decoration: none;
     color: black;
 }
 
-.message {
+.dialogMessage {
     display: grid;
     grid-area: m;
 

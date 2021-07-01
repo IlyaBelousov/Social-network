@@ -13,6 +13,8 @@ type AppType = {
     state: stateType
     addNewPost: (postMessage: string) => void
     ChangeNewPostText: (newText: string) => void
+    SendMessage:(message:string)=>void
+    ChangeMessage: (newMessage: string) => void
 
 
 }
@@ -26,13 +28,18 @@ function App(props: AppType) {
             <div className="container-content">
                 <Route path="/profile" render={() =>
                     <Profile addNewPost={props.addNewPost}
-                             posts={props.state.profile.posts}
+                             posts={props.state.profilePage.posts}
                              ChangeNewPostText={props.ChangeNewPostText}
 
                     />}
                 />
                 <Route path="/dialogs" render={() =>
-                    <Dialogs DialogsData={props.state.dialog.DialogsData}/>}/>
+                    <Dialogs
+                        state={props.state}
+                        ChangeMessage={props.ChangeMessage}
+                        SendMessage={props.SendMessage}
+                        DialogsData={props.state.dialogsPage}
+                    />}/>
                 <Route path="/music" render={() => <Music/>}/>
                 <Route path="/settings" render={() => <Settings/>}/>
             </div>
