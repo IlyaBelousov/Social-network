@@ -1,14 +1,17 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './Dialogs.module.css';
-import {DialogItemType, DialogType, stateType} from '../../redux/state';
+import {
+    DialogItemType, DialogsActionType,
+    DialogType,
+    stateType
+} from '../../redux/state';
 import {NavLink} from 'react-router-dom';
 import User from '../Users/User';
 import Message from './Message';
 
 type DialogsType = {
     DialogsData: DialogType
-    SendMessage: (message: string) => void
-    ChangeMessage: (newMessage: string) => void
+    dispatch:(action:DialogsActionType)=>void
     state: stateType
 }
 
@@ -18,13 +21,17 @@ const Dialogs = (props: DialogsType) => {
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let text = e.currentTarget.value;
         if (text) {
-            props.ChangeMessage(text);
-            console.log(props.state.dialogsPage.newMessageText);
+            props.dispatch({type: 'CHANGE-MESSAGE-TEXT', newMessage: text});
+        }
+    };
+    const onKeyPressHandler = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (event.key === 'Enter') {
+            sendMessageHandler()
         }
     };
 
     const sendMessageHandler = () => {
-        props.SendMessage(messageValue);
+        props.dispatch({type:'SEND-MESSAGE'});
 
     };
     let dialogsItems =
@@ -57,7 +64,7 @@ const Dialogs = (props: DialogsType) => {
                 </div>
             </div>
             <div className={s.addMessage}>
-                <textarea value={messageValue} onChange={onChangeHandler}/>
+                <textarea onKeyPress={onKeyPressHandler} value={messageValue} onChange={onChangeHandler}/>
                 <button disabled={!!disable} onClick={sendMessageHandler}>Send</button>
             </div>
         </div>

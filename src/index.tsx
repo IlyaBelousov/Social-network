@@ -11,10 +11,7 @@ export let rerenderEntireTree = (state:stateType) => {
         <BrowserRouter>
             <React.StrictMode>
                 <App
-                    ChangeMessage={store.ChangeMessage.bind(store)}
-                    SendMessage={store.SendMessage.bind(store)}
-                    ChangeNewPostText={store.ChangeNewPostText.bind(store)}
-                    addNewPost={store.addNewPost.bind(store)}
+                    dispatch={store.dispatch.bind(store)}
                     state={store.getState()}/>
 
             </React.StrictMode>

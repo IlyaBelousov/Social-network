@@ -35,14 +35,28 @@ export type stateType = {
 }
 export type StoreType = {
     _state: stateType
-    addNewPost: (postMessage: string) => void
-    ChangeNewPostText: (newText: string) => void
     subscribe: (observer: (state: stateType) => void) => void
     getState: () => stateType
-    rerenderEntireTree: (state: stateType) => void
-    SendMessage: (message: string) => void
-    ChangeMessage: (newMessage: string) => void
+    _rerenderEntireTree: (state: stateType) => void
+    dispatch: (action: ProfileActionType | DialogsActionType) => void
+}
+export type ProfileActionType=AddNewPostActionType|ChangeNewPostActionType
+export type DialogsActionType=SendMessageActionType|ChangeMessageTextActionType
+export type AddNewPostActionType = {
+    type: 'ADD-POST'
 
+}
+export type ChangeNewPostActionType = {
+    type: 'CHANGE-NEW-POST-TEXT'
+    newText: string
+}
+export type SendMessageActionType = {
+    type: 'SEND-MESSAGE'
+
+}
+export type ChangeMessageTextActionType = {
+    type: 'CHANGE-MESSAGE-TEXT'
+    newMessage: string
 }
 
 export let store: StoreType = {
@@ -77,38 +91,35 @@ export let store: StoreType = {
     getState() {
         return this._state;
     },
-    rerenderEntireTree() {
+    _rerenderEntireTree() {
         console.log('Error');
     },
-    ChangeMessage(newMessage: string) {
-        this._state.dialogsPage.newMessageText = newMessage;
-        this.rerenderEntireTree(this.getState());
-
-    },
-    SendMessage(message: string) {
-        let body = this._state.dialogsPage.newMessageText;
-        let newMessage = {id: 1, message: body};
-        this._state.dialogsPage.newMessageText = '';
-        this._state.dialogsPage.messages.push(newMessage);
-        this.rerenderEntireTree(this.getState());
-
-
-    },
-    addNewPost(postMessage: string) {
-        let newPost = {id: 6, message: postMessage, username: 'Htoto'};
-        this._state.profilePage.posts.post.unshift(newPost);
-        this.rerenderEntireTree(this.getState());
-
-
-    },
-    ChangeNewPostText(newText: string) {
-        this._state.profilePage.posts.newPostText = newText;
-        this.rerenderEntireTree(this.getState());
-
-    },
     subscribe(observer) {
-        this.rerenderEntireTree = observer;
+        this._rerenderEntireTree = observer;
     },
+
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            let newPostMessage = this._state.profilePage.posts.newPostText;
+            let newPost = {id: 6, message: newPostMessage, username: 'Htoto'};
+            this._state.profilePage.posts.post.unshift(newPost);
+            this._state.profilePage.posts.newPostText = '';
+            this._rerenderEntireTree(this.getState());
+        } else if (action.type === 'CHANGE-NEW-POST-TEXT') {
+            this._state.profilePage.posts.newPostText = action.newText;
+            this._rerenderEntireTree(this.getState());
+        } else if (action.type === 'SEND-MESSAGE') {
+            let body = this._state.dialogsPage.newMessageText;
+            let newMessage = {id: 6, message: body};
+            this._state.dialogsPage.newMessageText = '';
+            this._state.dialogsPage.messages.push(newMessage);
+            this._rerenderEntireTree(this.getState());
+        } else if (action.type === 'CHANGE-MESSAGE-TEXT') {
+            this._state.dialogsPage.newMessageText = action.newMessage;
+            this._rerenderEntireTree(this.getState());
+        }
+    }
+
 };
 
 

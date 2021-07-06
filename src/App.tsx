@@ -7,14 +7,17 @@ import {Route} from 'react-router-dom';
 import Dialogs from './components/Dialogs/Dialogs';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import {stateType} from './redux/state';
+import {
+    AddNewPostActionType,
+    ChangeMessageTextActionType,
+    ChangeNewPostActionType,
+    SendMessageActionType,
+    stateType
+} from './redux/state';
 
 type AppType = {
     state: stateType
-    addNewPost: (postMessage: string) => void
-    ChangeNewPostText: (newText: string) => void
-    SendMessage:(message:string)=>void
-    ChangeMessage: (newMessage: string) => void
+    dispatch:(action:AddNewPostActionType|ChangeNewPostActionType|SendMessageActionType|ChangeMessageTextActionType)=>void
 
 
 }
@@ -27,17 +30,14 @@ function App(props: AppType) {
             <Navbar/>
             <div className="container-content">
                 <Route path="/profile" render={() =>
-                    <Profile addNewPost={props.addNewPost}
+                    <Profile dispatch={props.dispatch}
                              posts={props.state.profilePage.posts}
-                             ChangeNewPostText={props.ChangeNewPostText}
-
                     />}
                 />
                 <Route path="/dialogs" render={() =>
                     <Dialogs
                         state={props.state}
-                        ChangeMessage={props.ChangeMessage}
-                        SendMessage={props.SendMessage}
+                        dispatch={props.dispatch}
                         DialogsData={props.state.dialogsPage}
                     />}/>
                 <Route path="/music" render={() => <Music/>}/>

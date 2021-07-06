@@ -1,15 +1,18 @@
 import React from 'react';
 import s from './Profile.module.css';
 import Post from './Posts/Post';
-import {messageType, PostsType, ProfilePropsType} from '../../redux/state';
+import {
+    messageType,
+    PostsType,
+    ProfileActionType
+} from '../../redux/state';
 import ProfileInfo from './ProfileInfo';
 import AddPost from './Posts/AddPost';
 import MyPost from './Posts/MyPost';
 
 type ProfileType = {
-    addNewPost: (postMessage: string) => void
     posts: PostsType
-    ChangeNewPostText: (newText: string) => void
+    dispatch:(action:ProfileActionType)=>void
 }
 
 function Profile(props: ProfileType) {
@@ -20,9 +23,8 @@ function Profile(props: ProfileType) {
 
             <ProfileInfo/>
             <MyPost/>
-            <AddPost ChangeNewPostText={props.ChangeNewPostText}
-                     newPostText={props.posts.newPostText}
-                     addNewPost={props.addNewPost}/>
+            <AddPost dispatch={props.dispatch}
+                     newPostText={props.posts.newPostText}/>
             <div className={s.usersPosts}>
                 {
                     props.posts.post.map((p: messageType) => <Post username={p.username}
