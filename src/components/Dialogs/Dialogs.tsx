@@ -1,8 +1,9 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './Dialogs.module.css';
 import {
+    ChangeMessageTextActionType,
     DialogItemType, DialogsActionType,
-    DialogType,
+    DialogType, SendMessageActionCreator,
     stateType
 } from '../../redux/state';
 import {NavLink} from 'react-router-dom';
@@ -21,7 +22,7 @@ const Dialogs = (props: DialogsType) => {
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let text = e.currentTarget.value;
         if (text) {
-            props.dispatch({type: 'CHANGE-MESSAGE-TEXT', newMessage: text});
+            props.dispatch(ChangeMessageTextActionType(text));
         }
     };
     const onKeyPressHandler = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -29,9 +30,8 @@ const Dialogs = (props: DialogsType) => {
             sendMessageHandler()
         }
     };
-
     const sendMessageHandler = () => {
-        props.dispatch({type:'SEND-MESSAGE'});
+        props.dispatch(SendMessageActionCreator());
 
     };
     let dialogsItems =

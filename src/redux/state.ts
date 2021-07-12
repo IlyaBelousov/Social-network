@@ -1,3 +1,6 @@
+import {ProfileReducer} from './profile-reducer';
+import {DialogsReducer} from './dialogs-reducer';
+
 export type DialogItemType = {
     id: number
     username: string
@@ -24,42 +27,43 @@ export type messageType = {
     id: number
     username: string
     message: string
-
-
 }
 export type stateType = {
     profilePage: ProfilePropsType
     dialogsPage: DialogType
-
-
 }
 export type StoreType = {
     _state: stateType
-    subscribe: (observer: (state: stateType) => void) => void
+    subscriber: (observer: (state: stateType) => void) => void
     getState: () => stateType
-    _rerenderEntireTree: (state: stateType) => void
-    dispatch: (action: ProfileActionType | DialogsActionType) => void
+    _callSubscriber: (state: stateType) => void
+    dispatch: (action: ActionsType) => void
 }
-export type ProfileActionType=AddNewPostActionType|ChangeNewPostActionType
-export type DialogsActionType=SendMessageActionType|ChangeMessageTextActionType
-export type AddNewPostActionType = {
-    type: 'ADD-POST'
+export type ActionsType = ProfileActionType | DialogsActionType
+export type ProfileActionType =
+    ReturnType<typeof AddNewPostActionCreator>
+    | ReturnType<typeof ChangeNewPostTextActionCreator>
+export type DialogsActionType =
+    ReturnType<typeof SendMessageActionCreator>
+    | ReturnType<typeof ChangeMessageTextActionType>
 
-}
-export type ChangeNewPostActionType = {
-    type: 'CHANGE-NEW-POST-TEXT'
-    newText: string
-}
-export type SendMessageActionType = {
-    type: 'SEND-MESSAGE'
+export const SendMessageActionCreator = () => {
+    return {type: 'SEND-MESSAGE'} as const;
+};
+export const ChangeMessageTextActionType = (text: string) => {
+    return {
+        type: 'CHANGE-MESSAGE-TEXT',
+        newMessage: text
+    } as const;
+};
+export const AddNewPostActionCreator = () => {
+    return {type: 'ADD-POST'} as const;
+};
+export const ChangeNewPostTextActionCreator = (text: string) => {
+    return {type: 'CHANGE-NEW-POST-TEXT', newText: text} as const;
 
-}
-export type ChangeMessageTextActionType = {
-    type: 'CHANGE-MESSAGE-TEXT'
-    newMessage: string
-}
-
-export let store: StoreType = {
+};
+export const store: StoreType = {
     _state: {
         profilePage: {
             posts: {
@@ -71,7 +75,6 @@ export let store: StoreType = {
                 newPostText: ''
             },
         },
-
         dialogsPage: {
             dialogs: [
                 {id: 1, username: 'Liza'},
@@ -91,35 +94,17 @@ export let store: StoreType = {
     getState() {
         return this._state;
     },
-    _rerenderEntireTree() {
+    _callSubscriber() {
         console.log('Error');
     },
-    subscribe(observer) {
-        this._rerenderEntireTree = observer;
+    subscriber(observer) {
+        this._callSubscriber = observer;
     },
-
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
-            let newPostMessage = this._state.profilePage.posts.newPostText;
-            let newPost = {id: 6, message: newPostMessage, username: 'Htoto'};
-            this._state.profilePage.posts.post.unshift(newPost);
-            this._state.profilePage.posts.newPostText = '';
-            this._rerenderEntireTree(this.getState());
-        } else if (action.type === 'CHANGE-NEW-POST-TEXT') {
-            this._state.profilePage.posts.newPostText = action.newText;
-            this._rerenderEntireTree(this.getState());
-        } else if (action.type === 'SEND-MESSAGE') {
-            let body = this._state.dialogsPage.newMessageText;
-            let newMessage = {id: 6, message: body};
-            this._state.dialogsPage.newMessageText = '';
-            this._state.dialogsPage.messages.push(newMessage);
-            this._rerenderEntireTree(this.getState());
-        } else if (action.type === 'CHANGE-MESSAGE-TEXT') {
-            this._state.dialogsPage.newMessageText = action.newMessage;
-            this._rerenderEntireTree(this.getState());
-        }
+        this._state.profilePage=ProfileReducer(this._state.profilePage, action);
+        this._state.dialogsPage=DialogsReducer(this._state.dialogsPage, action);
+        this._callSubscriber(this._state)
     }
-
 };
 
 

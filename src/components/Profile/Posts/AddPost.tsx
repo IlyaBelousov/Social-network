@@ -1,26 +1,24 @@
-import React, {ChangeEvent, createRef, KeyboardEvent} from 'react';
+import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from '../Profile.module.css';
-import {AddNewPostActionType, ChangeNewPostActionType} from '../../../redux/state';
-
-
+import {AddNewPostActionCreator, ChangeNewPostTextActionCreator, ProfileActionType} from '../../../redux/state';
 
 type AddPostType = {
-    dispatch:(action:AddNewPostActionType|ChangeNewPostActionType)=>void
+    dispatch: (action: ProfileActionType) => void
     newPostText: string
 }
 
 const AddPost = (props: AddPostType) => {
 
-    const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
-        let text = e.currentTarget.value
-        if(text){
-            props.dispatch({type:'CHANGE-NEW-POST-TEXT',newText:text});
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        let text = e.currentTarget.value;
+        if (text) {
+            props.dispatch(ChangeNewPostTextActionCreator(text));
         }
 
     };
 
     let createPost = () => {
-            props.dispatch({type:'ADD-POST'});
+        props.dispatch(AddNewPostActionCreator());
     };
 
     const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {

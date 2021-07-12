@@ -7,22 +7,14 @@ import {Route} from 'react-router-dom';
 import Dialogs from './components/Dialogs/Dialogs';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import {
-    AddNewPostActionType,
-    ChangeMessageTextActionType,
-    ChangeNewPostActionType,
-    SendMessageActionType,
-    stateType
-} from './redux/state';
+import {DialogsActionType, ProfileActionType, stateType} from './redux/state';
 
-type AppType = {
+type AppPropsType = {
     state: stateType
-    dispatch:(action:AddNewPostActionType|ChangeNewPostActionType|SendMessageActionType|ChangeMessageTextActionType)=>void
-
-
+    dispatch: (action: ProfileActionType | DialogsActionType) => void
 }
 
-function App(props: AppType) {
+function App(props: AppPropsType) {
     return (
 
         <div className="container">
@@ -47,5 +39,4 @@ function App(props: AppType) {
 
     );
 }
-
 export default App;
