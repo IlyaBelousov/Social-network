@@ -1,6 +1,16 @@
-import {ActionsType, ProfilePropsType} from './state';
+import {ActionsType} from './state';
 
-export const ProfileReducer = (state: ProfilePropsType, action: ActionsType) => {
+let initialState = {
+    posts: {
+        post: [
+            {id: 1, username: 'Liza', message: 'Hey! How are you?'},
+            {id: 2, username: 'Denchik', message: 'Hey! How are you?'},
+            {id: 3, username: 'Leo', message: 'Hey! How are you?'}
+        ],
+        newPostText: ''
+    }
+};
+export const ProfileReducer = (state = initialState, action: ActionsType) => {
     switch (action.type) {
         case 'ADD-POST' :
             let newPostMessage = state.posts.newPostText;

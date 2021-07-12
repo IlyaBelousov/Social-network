@@ -9,11 +9,11 @@ import {
 import {NavLink} from 'react-router-dom';
 import User from '../Users/User';
 import Message from './Message';
+import {AppStateType} from '../../redux/redux-store';
 
 type DialogsType = {
-    DialogsData: DialogType
     dispatch:(action:DialogsActionType)=>void
-    state: stateType
+    state: AppStateType
 }
 
 const Dialogs = (props: DialogsType) => {
@@ -35,12 +35,12 @@ const Dialogs = (props: DialogsType) => {
 
     };
     let dialogsItems =
-        props.DialogsData.dialogs
+        props.state.dialogsPage.dialogs
             .map((t: DialogItemType) =>
                 <DialogItem id={t.id}
                             username={t.username}/>);
     let messagesItems =
-        props.DialogsData.messages
+        props.state.dialogsPage.messages
             .map(m =>
                 <Message message={m.message}/>
             );

@@ -3,7 +3,7 @@ import React from 'react';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom';
 import './index.css';
-import {store} from './redux/state';
+import {store} from './redux/redux-store'
 
 
 export let rerenderEntireTree = () => {
@@ -21,7 +21,7 @@ export let rerenderEntireTree = () => {
 
 rerenderEntireTree();
 
-store.subscriber(rerenderEntireTree)
+store.subscribe(rerenderEntireTree)
 
 
 // If you want to start measuring performance in your app, pass a function

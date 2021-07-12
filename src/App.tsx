@@ -7,14 +7,16 @@ import {Route} from 'react-router-dom';
 import Dialogs from './components/Dialogs/Dialogs';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import {DialogsActionType, ProfileActionType, stateType} from './redux/state';
+import {DialogsActionType, ProfileActionType} from './redux/state';
+import {AppStateType} from './redux/redux-store';
 
 type AppPropsType = {
-    state: stateType
+    state: AppStateType
     dispatch: (action: ProfileActionType | DialogsActionType) => void
 }
 
 function App(props: AppPropsType) {
+
     return (
 
         <div className="container">
@@ -30,7 +32,6 @@ function App(props: AppPropsType) {
                     <Dialogs
                         state={props.state}
                         dispatch={props.dispatch}
-                        DialogsData={props.state.dialogsPage}
                     />}/>
                 <Route path="/music" render={() => <Music/>}/>
                 <Route path="/settings" render={() => <Settings/>}/>
