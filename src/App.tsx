@@ -10,12 +10,12 @@ import Settings from './components/Settings/Settings';
 import {DialogsActionType, ProfileActionType} from './redux/state';
 import {AppStateType} from './redux/redux-store';
 
-type AppPropsType = {
-    state: AppStateType
-    dispatch: (action: ProfileActionType | DialogsActionType) => void
-}
+// type AppPropsType = {
+//     state: AppStateType
+//     dispatch: (action: ProfileActionType | DialogsActionType) => void
+// }
 
-function App(props: AppPropsType) {
+function App() {
 
     return (
 
@@ -24,15 +24,10 @@ function App(props: AppPropsType) {
             <Navbar/>
             <div className="container-content">
                 <Route path="/profile" render={() =>
-                    <Profile dispatch={props.dispatch}
-                             posts={props.state.profilePage.posts}
-                    />}
+                    <Profile/>}
                 />
                 <Route path="/dialogs" render={() =>
-                    <Dialogs
-                        state={props.state}
-                        dispatch={props.dispatch}
-                    />}/>
+                    <Dialogs />}/>
                 <Route path="/music" render={() => <Music/>}/>
                 <Route path="/settings" render={() => <Settings/>}/>
             </div>

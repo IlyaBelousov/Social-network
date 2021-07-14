@@ -63,7 +63,7 @@ export const ChangeNewPostTextActionCreator = (text: string) => {
     return {type: 'CHANGE-NEW-POST-TEXT', newText: text} as const;
 
 };
-export const store: StoreType = {
+const store: StoreType = {
     _state: {
         profilePage: {
             posts: {

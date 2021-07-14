@@ -3,8 +3,9 @@ import s from '../Profile.module.css';
 import {AddNewPostActionCreator, ChangeNewPostTextActionCreator, ProfileActionType} from '../../../redux/state';
 
 type AddPostType = {
-    dispatch: (action: ProfileActionType) => void
     newPostText: string
+    updateNewPostText: (text: string) => void
+    createPost: () => void
 }
 
 const AddPost = (props: AddPostType) => {
@@ -12,13 +13,12 @@ const AddPost = (props: AddPostType) => {
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let text = e.currentTarget.value;
         if (text) {
-            props.dispatch(ChangeNewPostTextActionCreator(text));
+            props.updateNewPostText(text);
         }
-
     };
 
     let createPost = () => {
-        props.dispatch(AddNewPostActionCreator());
+        props.createPost()
     };
 
     const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ const AddPost = (props: AddPostType) => {
     return (
         <div className={s.newPost}>
             <input onKeyPress={onKeyPressHandler} value={props.newPostText} onChange={onChangeHandler}/>
-            <button onClick={createPost}>Send</button>
+            <button onClick={()=>createPost()}>Send</button>
         </div>
     );
 };

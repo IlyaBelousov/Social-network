@@ -9,20 +9,20 @@ import {
 import {NavLink} from 'react-router-dom';
 import User from '../Users/User';
 import Message from './Message';
-import {AppStateType} from '../../redux/redux-store';
+import {AppStateType, store} from '../../redux/redux-store';
 
-type DialogsType = {
+/*type DialogsType = {
     dispatch:(action:DialogsActionType)=>void
     state: AppStateType
-}
+}*/
 
-const Dialogs = (props: DialogsType) => {
-    let messageValue = props.state.dialogsPage.newMessageText;
+const Dialogs = () => {
+    let messageValue = store.getState().dialogsPage.newMessageText;
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let text = e.currentTarget.value;
         if (text) {
-            props.dispatch(ChangeMessageTextActionType(text));
+            store.dispatch(ChangeMessageTextActionType(text));
         }
     };
     const onKeyPressHandler = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -31,16 +31,16 @@ const Dialogs = (props: DialogsType) => {
         }
     };
     const sendMessageHandler = () => {
-        props.dispatch(SendMessageActionCreator());
+        store.dispatch(SendMessageActionCreator());
 
     };
     let dialogsItems =
-        props.state.dialogsPage.dialogs
+        store.getState().dialogsPage.dialogs
             .map((t: DialogItemType) =>
                 <DialogItem id={t.id}
                             username={t.username}/>);
     let messagesItems =
-        props.state.dialogsPage.messages
+        store.getState().dialogsPage.messages
             .map(m =>
                 <Message message={m.message}/>
             );
