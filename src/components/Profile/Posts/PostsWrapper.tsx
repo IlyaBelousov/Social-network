@@ -1,9 +1,10 @@
-import {StoreContext} from '../../../StoreContext';
-import {AddNewPostActionCreator, ChangeNewPostTextActionCreator} from '../../../redux/redux-store';
+import {AddNewPostActionCreator, AppStateType, ChangeNewPostTextActionCreator} from '../../../redux/redux-store';
 import AddPost from './AddPost';
 import s from '../Profile.module.css';
 import Post from './Post';
 import React from 'react';
+import {Dispatch} from 'redux';
+import {connect} from 'react-redux';
 
 type PostMessageType = {
     id: number
@@ -11,31 +12,45 @@ type PostMessageType = {
     message: string
 }
 export const PostWrapper = () => {
-
-    return <StoreContext.Consumer>{
-        (store) => {
-            const AddPostChangeHandler = (text: string) => {
-                store.dispatch(ChangeNewPostTextActionCreator(text));
-            };
-            const CreatePostHandler = () => {
-                store.dispatch(AddNewPostActionCreator());
-            };
-            return <div>
-                <AddPost
-                    createPost={CreatePostHandler}
-                    updateNewPostText={AddPostChangeHandler}
-                    newPostText={store.getState().profilePage.posts.newPostText}/>
-                <div className={s.usersPosts}>
-                    {
-                        store.getState().profilePage.posts.post.map((p: PostMessageType) =>
-                            <Post username={p.username}
-                                  id={p.id}
-                                  message={p.message}/>)
-                    }
-                </div>
-            </div>;
-        }
-
-    }
-    </StoreContext.Consumer>;
+    return <div>
+        <SuperPostWrapper/>
+        <UsersPostContainer/>
+    </div>;
 };
+type UsersPostPropsType = {
+    post:Array<PostMessageType>
+}
+
+export const UsersPost = (props: UsersPostPropsType) => {
+    return <div className={s.usersPosts}>
+        {
+            props.post.map((p: PostMessageType) =>
+                <Post username={p.username}
+                      id={p.id}
+                      message={p.message}/>)
+        }
+    </div>;
+};
+
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        newPostText: state.profilePage.newPostText,
+    };
+};
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        createPost: () => {
+            dispatch(AddNewPostActionCreator());
+        },
+        updateNewPostText: (text: string) => {
+            dispatch(ChangeNewPostTextActionCreator(text));
+        }
+    };
+};
+const SuperPostWrapper = connect(mapStateToProps, mapDispatchToProps)(AddPost);
+const UsersPostMapStateToProps = (state: AppStateType) => {
+    return {
+        post: state.profilePage.post
+    };
+};
+const UsersPostContainer = connect(UsersPostMapStateToProps)(UsersPost);

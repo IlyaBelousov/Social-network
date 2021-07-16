@@ -1,5 +1,4 @@
-import {ProfileReducer} from './profile-reducer';
-import {DialogsReducer} from './dialogs-reducer';
+
 import {ActionsType} from './redux-store';
 
 type DialogsItemType = {
@@ -16,21 +15,18 @@ export type DialogType = {
     messages: Array<DialogMessageType>
     newMessageText: string
 }
-export type ProfilePropsType = {
-    posts: PostsType
 
-}
 export type PostsType = {
     post: Array<messageType>
     newPostText: string
 }
-export type messageType = {
+ type messageType = {
     id: number
     username: string
     message: string
 }
 export type stateType = {
-    profilePage: ProfilePropsType
+    profilePage: PostsType
     dialogsPage: DialogType
 }
 export type StoreType = {
@@ -44,14 +40,13 @@ export type StoreType = {
 const store: StoreType = {
     _state: {
         profilePage: {
-            posts: {
                 post: [
                     {id: 1, username: 'Liza', message: 'Hey! How are you?'},
                     {id: 2, username: 'Denchik', message: 'Hey! How are you?'},
                     {id: 3, username: 'Leo', message: 'Hey! How are you?'}
                 ],
                 newPostText: ''
-            },
+
         },
         dialogsPage: {
             dialogs: [
@@ -79,8 +74,8 @@ const store: StoreType = {
         this._callSubscriber = observer;
     },
     dispatch(action) {
-        this._state.profilePage=ProfileReducer(this._state.profilePage, action);
-        this._state.dialogsPage=DialogsReducer(this._state.dialogsPage, action);
-        this._callSubscriber(this._state)
+        /*this._state.profilePage=ProfileReducer(this._state.profilePage, action);
+       this._state.dialogsPage=DialogsReducer(this._state.dialogsPage, action);
+       this._callSubscriber(this._state)*/
     }
 };

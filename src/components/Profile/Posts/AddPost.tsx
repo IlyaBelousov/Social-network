@@ -30,7 +30,7 @@ const AddPost = (props: AddPostType) => {
     return (
         <div className={s.newPost}>
             <input onKeyPress={onKeyPressHandler} value={props.newPostText} onChange={onChangeHandler}/>
-            <button onClick={()=>createPost()}>Send</button>
+            <button onClick={createPost}>Send</button>
         </div>
     );
 };

@@ -1,6 +1,13 @@
 import {ActionsType} from './redux-store';
+export type DialogsReducerInitialStateType={
+    dialogs: Array<UserType>
+    messages: Array<MessageType>
+    newMessageText: string
+}
+type UserType={id: number, username: string}
+type MessageType={id: number, message: string}
 
-let initialState = {
+let initialState:DialogsReducerInitialStateType = {
     dialogs: [
         {id: 1, username: 'Liza'},
         {id: 2, username: 'Denchik'},
@@ -17,15 +24,19 @@ let initialState = {
 };
 export const DialogsReducer = (state = initialState, action: ActionsType) => {
     switch (action.type) {
-        case 'SEND-MESSAGE':
-            let body = state.newMessageText;
+        case 'SEND-MESSAGE': {
+            let stateCopy={...state,dialogs:[...state.dialogs],messages:[...state.messages]}
+            let body = stateCopy.newMessageText;
             let newMessage = {id: 6, message: body};
-            state.newMessageText = '';
-            state.messages.push(newMessage);
-            return state;
-        case 'CHANGE-MESSAGE-TEXT':
-            state.newMessageText = action.newMessage;
-            return state;
+            stateCopy.newMessageText = '';
+            stateCopy.messages.push(newMessage);
+            return {...stateCopy};
+        }
+        case 'CHANGE-MESSAGE-TEXT': {
+            let stateCopy={...state}
+            stateCopy.newMessageText = action.newMessage;
+            return {...stateCopy};
+        }
         default:
             return state;
     }

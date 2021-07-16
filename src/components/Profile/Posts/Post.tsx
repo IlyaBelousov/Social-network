@@ -1,10 +1,13 @@
 import React from 'react';
 import s from '../Profile.module.css';
-import {messageType} from '../../../redux/state';
 import User from '../../Users/User';
+type MessageType={
+    id: number
+    username: string
+    message: string
+}
 
-
-const Post = (props: messageType) => {
+const Post = (props: MessageType) => {
     return (
         <div className={s.postItem}>
             {
