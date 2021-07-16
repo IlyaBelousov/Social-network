@@ -1,7 +1,8 @@
 import {ProfileReducer} from './profile-reducer';
 import {DialogsReducer} from './dialogs-reducer';
+import {ActionsType} from './redux-store';
 
-export type DialogItemType = {
+type DialogsItemType = {
     id: number
     username: string
 
@@ -11,7 +12,7 @@ export type DialogMessageType = {
     message: string
 }
 export type DialogType = {
-    dialogs: Array<DialogItemType>
+    dialogs: Array<DialogsItemType>
     messages: Array<DialogMessageType>
     newMessageText: string
 }
@@ -39,30 +40,7 @@ export type StoreType = {
     _callSubscriber: (state: stateType) => void
     dispatch: (action: ActionsType) => void
 }
-export type ActionsType = ProfileActionType | DialogsActionType
-export type ProfileActionType =
-    ReturnType<typeof AddNewPostActionCreator>
-    | ReturnType<typeof ChangeNewPostTextActionCreator>
-export type DialogsActionType =
-    ReturnType<typeof SendMessageActionCreator>
-    | ReturnType<typeof ChangeMessageTextActionType>
 
-export const SendMessageActionCreator = () => {
-    return {type: 'SEND-MESSAGE'} as const;
-};
-export const ChangeMessageTextActionType = (text: string) => {
-    return {
-        type: 'CHANGE-MESSAGE-TEXT',
-        newMessage: text
-    } as const;
-};
-export const AddNewPostActionCreator = () => {
-    return {type: 'ADD-POST'} as const;
-};
-export const ChangeNewPostTextActionCreator = (text: string) => {
-    return {type: 'CHANGE-NEW-POST-TEXT', newText: text} as const;
-
-};
 const store: StoreType = {
     _state: {
         profilePage: {
@@ -106,11 +84,3 @@ const store: StoreType = {
         this._callSubscriber(this._state)
     }
 };
-
-
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-import {ActionsType} from './state';
+import {ActionsType} from './redux-store';
 
 let initialState = {
     dialogs: [

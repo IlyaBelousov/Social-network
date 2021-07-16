@@ -52,6 +52,7 @@
 }
 
 .dialogMessage {
+    padding-top: 10px;
     display: grid;
     grid-area: m;
 

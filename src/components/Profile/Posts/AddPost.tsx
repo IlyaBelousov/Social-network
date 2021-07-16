@@ -1,6 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from '../Profile.module.css';
-import {AddNewPostActionCreator, ChangeNewPostTextActionCreator, ProfileActionType} from '../../../redux/state';
 
 type AddPostType = {
     newPostText: string

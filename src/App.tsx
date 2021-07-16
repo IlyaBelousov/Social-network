@@ -7,8 +7,7 @@ import {Route} from 'react-router-dom';
 import Dialogs from './components/Dialogs/Dialogs';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import {DialogsActionType, ProfileActionType} from './redux/state';
-import {AppStateType} from './redux/redux-store';
+
 
 // type AppPropsType = {
 //     state: AppStateType
