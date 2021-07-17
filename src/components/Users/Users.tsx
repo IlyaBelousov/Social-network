@@ -1,30 +1,42 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import User from './User';
 import s from './User.module.css';
 import {AppStateType} from '../../redux/redux-store';
 import {Dispatch} from 'redux';
-import {FollowAC, SetUsersAC, UserStateType} from '../../redux/users-reduser';
+import {FollowAC, SetUsersAC, UserDataType, UserStateType} from '../../redux/users-reducer';
+import axios from 'axios';
 
-type UsersPropsType = {
-    users: Array<UserStateType>
+type UsersPropsType = UsersMapStateToPropsType & UsersMapDispatchToPropsType
+
+type UsersMapStateToPropsType = {
+    items: Array<UserDataType>
+}
+type UsersMapDispatchToPropsType = {
     follow: (userID: number) => void
-    setUsers: (users: Array<UserStateType>) => void
-
+    setUsers: (items: Array<UserDataType>) => void
 }
 
 export const Users = (props: UsersPropsType) => {
+
+    if (props.items.length === 0) {
+        axios.get<{ items: UserDataType[] }>('https://social-network.samuraijs.com/api/1.0/users')
+            .then(response => {
+                props.setUsers(response.data.items);
+            });
+    }
     return (
         <div>
+
             {
-                props.users.map(u => {
+                props.items.map(u => {
                     const FollowHandler = () => {
-                        props.follow(u.id)
+                        props.follow(u.id);
                     };
                     return (
-                        <div className={s.wrapper}>
+                        <div key={u.id} className={s.wrapper}>
                             <div className={s.container}>
                                 <div className={s.usersBlock}>
-                                    <User key={u.id} name={u.fullName}/>
+                                    <User key={u.id} name={u.name} photoUrl={"https://insights.mgm-tp.com/wp-content/uploads/2019/04/default-avatar.png"}/>
                                     <p className={s.status}>{u.status}</p>
                                     <div>
                                         <button
@@ -35,8 +47,8 @@ export const Users = (props: UsersPropsType) => {
                                     </div>
                                 </div>
                                 <div className={s.location}>
-                                    <div className={s.country}>{u.location.country}</div>
-                                    <div className={s.city}>{u.location.city}</div>
+                                    {/*<div className={s.country}>{u.location.country}</div>
+                                    <div className={s.city}>{u.location.city}</div>*/}
                                 </div>
                             </div>
                         </div>);
@@ -46,18 +58,18 @@ export const Users = (props: UsersPropsType) => {
     );
 };
 
-export const UsersMapStateToProps = (state: AppStateType) => {
+export const UsersMapStateToProps = (state: AppStateType): UsersMapStateToPropsType => {
     return {
-        users: state.usersPage.users
+        items: state.usersPage.items
     };
 };
-export const UsersMapDispatchToProps = (dispatch: Dispatch) => {
+export const UsersMapDispatchToProps = (dispatch: Dispatch): UsersMapDispatchToPropsType => {
     return {
         follow: (userID: number) => {
             dispatch(FollowAC(userID));
         },
-        setUsers: (users: Array<UserStateType>) => {
-            dispatch(SetUsersAC(users));
+        setUsers: (items: Array<UserDataType>) => {
+            dispatch(SetUsersAC(items));
         }
     };
 };

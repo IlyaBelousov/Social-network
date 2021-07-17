@@ -27,7 +27,7 @@ type DialogItemType = {
 export const DialogItem = (props: DialogItemType) => {
     return (
         <div className={s.dialog}>
-            <NavLink to={'/dialogs/' + props.id} activeClassName={s.active} className={s.user}><User
+            <NavLink to={'/dialogs/' + props.id} activeClassName={s.active} className={s.user}><User photoUrl={"https://insights.mgm-tp.com/wp-content/uploads/2019/04/default-avatar.png"}
                 name={props.username}/></NavLink>
         </div>
     );
