@@ -1,16 +1,18 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './Dialogs.module.css';
 import {
-    AppStateType,
-    ChangeMessageTextActionType,
-    SendMessageActionCreator,
+    AppStateType
 } from '../../redux/redux-store';
 import {NavLink} from 'react-router-dom';
 import User from '../Users/User';
 import Message from './Message';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
-import {DialogsReducerInitialStateType} from '../../redux/dialogs-reducer';
+import {
+    ChangeMessageTextActionType,
+    DialogsReducerInitialStateType,
+    SendMessageActionCreator
+} from '../../redux/dialogs-reducer';
 
 const DialogsContainer = () => {
     return <SuperDialogsContainer/>

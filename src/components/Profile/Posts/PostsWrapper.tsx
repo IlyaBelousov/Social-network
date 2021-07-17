@@ -1,10 +1,11 @@
-import {AddNewPostActionCreator, AppStateType, ChangeNewPostTextActionCreator} from '../../../redux/redux-store';
+import {AppStateType} from '../../../redux/redux-store';
 import AddPost from './AddPost';
 import s from '../Profile.module.css';
 import Post from './Post';
 import React from 'react';
 import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
+import {AddNewPostActionCreator, ChangeNewPostTextActionCreator} from '../../../redux/profile-reducer';
 
 type PostMessageType = {
     id: number
