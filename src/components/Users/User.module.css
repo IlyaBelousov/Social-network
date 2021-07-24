@@ -10,14 +10,16 @@
     border-radius: 50%;
     margin-right: 10px;
 }
-.wrapper{
+
+.wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 400px;
     box-sizing: border-box;
 }
-.container{
+
+.container {
     width: 300px;
     height: 90px;
     background-color: rgba(23, 66, 66, 0.21);
@@ -31,11 +33,13 @@
     justify-content: space-between;
     align-items: flex-start;
 }
-.name,.message,.time{
+
+.name, .message, .time {
     position: absolute;
 
 }
-.status{
+
+.status {
     margin-top: 25px;
     position: absolute;
     color: rgba(50, 52, 50, 0.86);
@@ -43,12 +47,14 @@
     font-size: .8em;
 
 }
-.message{
+
+.message {
     margin-top: 30px;
     color: #0cea3c;
     position: absolute;
 }
-.container .country{
+
+.container .country {
     margin-top: 30px;
     margin-left: 180px;
     color: black;
@@ -56,7 +62,8 @@
     display: inline-block;
 
 }
-.container .city{
+
+.container .city {
     margin-top: 50px;
     margin-left: 150px;
     color: black;
@@ -64,20 +71,29 @@
     display: inline-block;
 
 }
-.location{
+
+.location {
     display: flex;
     flex-direction: column;
     align-content: stretch;
     justify-content: flex-start;
     align-items: flex-end;
 }
-.usersBlock{
+
+.usersBlock {
     width: 40px;
     display: flex;
     flex-direction: column;
-
 }
-.userButton{
-    height: 20px;
 
+.userButton {
+    height: 20px;
+}
+
+.pages{
+    cursor: pointer;
+}
+.selected {
+    font-weight: bold;
+    cursor: pointer;
 }
