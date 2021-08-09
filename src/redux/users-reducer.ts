@@ -28,7 +28,7 @@ export type UserDataType = {
 
 let UsersInitialState: UserStateType = {
     items: [],
-    totalCount: 200,
+    totalCount: 0,
     error: null,
     pageSize: 5,
     currentPage: 1

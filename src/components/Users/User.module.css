@@ -92,6 +92,7 @@
 
 .pages{
     cursor: pointer;
+    margin: 0 5px 0 5px;
 }
 .selected {
     font-weight: bold;

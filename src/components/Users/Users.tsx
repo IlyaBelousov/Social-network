@@ -28,7 +28,7 @@ export class Users extends React.Component<UsersPropsType> {
         axios.get<{ items: UserDataType[], totalCount: number }>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
                 this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount);
+                this.props.setTotalUsersCount(200);
             });
     }
 
@@ -51,10 +51,13 @@ export class Users extends React.Component<UsersPropsType> {
             <div>
                 <div>
                     {pages.map(p => {
-                        return <span onClick={() => {
-                            this.onPageChanged(p);
-                        }}
-                                     className={(this.props.currentPage === p ? s.selected : s.pages)}>{p}</span>;
+                        return <span
+                            onClick={() => {
+                                this.onPageChanged(p);
+                            }}
+                            className={(this.props.currentPage === p
+                                ? s.selected
+                                : s.pages)}>{p}</span>;
                     })}
                 </div>
                 {
@@ -66,9 +69,12 @@ export class Users extends React.Component<UsersPropsType> {
                             <div key={u.id} className={s.wrapper}>
                                 <div className={s.container}>
                                     <div className={s.usersBlock}>
-                                        <User key={u.id} name={u.name}
-                                              photoUrl={`https://insights.mgm-tp.com/wp-content/uploads/2019/04/default-avatar.png`}/>
-                                        <p className={s.status}>{u.status}</p>
+                                        <User key={u.id}
+                                              name={u.name}
+                                              photoUrl={u.photos.large}
+                                              status={u.status}
+                                        />
+
                                         <div>
                                             <button
                                                 onClick={FollowHandler}
