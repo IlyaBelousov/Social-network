@@ -3,8 +3,16 @@ import User from './User';
 import s from './User.module.css';
 import {AppStateType} from '../../redux/redux-store';
 import {Dispatch} from 'redux';
-import {FollowAC, SetCurrentPageAC, SetTotalUsersCountAC, SetUsersAC, UserDataType} from '../../redux/users-reducer';
+import {
+    FollowAC,
+    SetCurrentPageAC,
+    SetIsFetchingAC,
+    SetTotalUsersCountAC,
+    SetUsersAC,
+    UserDataType
+} from '../../redux/users-reducer';
 import axios from 'axios';
+import {Preloader} from '../../common/Preloader';
 
 
 type UsersPropsType = UsersMapStateToPropsType & UsersMapDispatchToPropsType
@@ -14,28 +22,34 @@ type UsersMapStateToPropsType = {
     pageSize: number
     totalCount: number
     currentPage: number
+    isFetching: boolean
 }
 type UsersMapDispatchToPropsType = {
     follow: (userID: number) => void
     setUsers: (items: Array<UserDataType>) => void
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
+    SetToggleIsFetching: (isFetching: boolean) => void
 }
 
 export class Users extends React.Component<UsersPropsType> {
 
     componentDidMount() {
+        this.props.SetToggleIsFetching(true);
         axios.get<{ items: UserDataType[], totalCount: number }>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
+                this.props.SetToggleIsFetching(false);
                 this.props.setUsers(response.data.items);
                 this.props.setTotalUsersCount(200);
             });
     }
 
     onPageChanged(pageNumber: number) {
+        this.props.SetToggleIsFetching(true);
         this.props.setCurrentPage(pageNumber);
         axios.get<{ items: UserDataType[] }>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
             .then(response => {
+                this.props.SetToggleIsFetching(false);
                 this.props.setUsers(response.data.items);
             });
     }
@@ -60,6 +74,7 @@ export class Users extends React.Component<UsersPropsType> {
                                 : s.pages)}>{p}</span>;
                     })}
                 </div>
+                {this.props.isFetching && <Preloader/>}
                 {
                     this.props.items.map(u => {
                         const FollowHandler = () => {
@@ -83,10 +98,7 @@ export class Users extends React.Component<UsersPropsType> {
                                             </button>
                                         </div>
                                     </div>
-                                    {/*<div className={s.location}>
-                                        {/!*<div className={s.country}>{u.location.country}</div>
-                                            <div className={s.city}>{u.location.city}</div>*!/}
-                                            </div>*/}
+
                                 </div>
                             </div>);
                     })}
@@ -95,12 +107,13 @@ export class Users extends React.Component<UsersPropsType> {
 }
 
 
-export const UsersMapStateToProps = (state: AppStateType): { pageSize: number; totalCount: number; currentPage: number; items: Array<UserDataType> } => {
+export const UsersMapStateToProps = (state: AppStateType): UsersMapStateToPropsType => {
     return {
         items: state.usersPage.items,
         pageSize: state.usersPage.pageSize,
         totalCount: state.usersPage.totalCount,
-        currentPage: state.usersPage.currentPage
+        currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching,
     };
 };
 export const UsersMapDispatchToProps = (dispatch: Dispatch): UsersMapDispatchToPropsType => {
@@ -116,6 +129,9 @@ export const UsersMapDispatchToProps = (dispatch: Dispatch): UsersMapDispatchToP
         },
         setTotalUsersCount: (totalCount: number) => {
             dispatch(SetTotalUsersCountAC(totalCount));
+        },
+        SetToggleIsFetching: (isFetching: boolean) => {
+            dispatch(SetIsFetchingAC(isFetching));
         }
     };
 };
