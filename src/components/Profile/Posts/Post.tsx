@@ -11,7 +11,9 @@ const Post = (props: MessageType) => {
     return (
         <div className={s.postItem}>
             {
-                <User photoUrl={"https://insights.mgm-tp.com/wp-content/uploads/2019/04/default-avatar.png"} name={props.username}/>
+                <User
+                id={props.id}
+                    photoUrl={"https://insights.mgm-tp.com/wp-content/uploads/2019/04/default-avatar.png"} name={props.username}/>
             }
             {props.message}
 

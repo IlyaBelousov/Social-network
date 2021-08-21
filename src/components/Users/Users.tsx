@@ -82,6 +82,7 @@ export class Users extends React.Component<UsersPropsType> {
                                               name={u.name}
                                               photoUrl={u.photos.large}
                                               status={u.status}
+                                              id={u.id}
                                         />
 
                                         <div>

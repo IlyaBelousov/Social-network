@@ -15,7 +15,7 @@ import {
 } from '../../redux/dialogs-reducer';
 
 const DialogsContainer = () => {
-    return <SuperDialogsContainer/>
+    return <SuperDialogsContainer/>;
 };
 
 export default DialogsContainer;
@@ -27,8 +27,11 @@ type DialogItemType = {
 export const DialogItem = (props: DialogItemType) => {
     return (
         <div className={s.dialog}>
-            <NavLink to={'/dialogs/' + props.id} activeClassName={s.active} className={s.user}><User photoUrl={"https://insights.mgm-tp.com/wp-content/uploads/2019/04/default-avatar.png"}
+            <NavLink to={'/dialogs/' + props.id} activeClassName={s.active} className={s.user}><User
+                id={props.id}
+                photoUrl={'https://insights.mgm-tp.com/wp-content/uploads/2019/04/default-avatar.png'}
                 name={props.username}
+
             /></NavLink>
         </div>
     );
@@ -55,7 +58,7 @@ export const Dialogs = (props: DialogsType) => {
         }
     };
     const sendMessageHandler = () => {
-        props.sendMessage()
+        props.sendMessage();
     };
 
     let disable = null;
@@ -93,7 +96,7 @@ const mapStateToProps = (state: AppStateType) => {
         dialogsPage: state.dialogsPage
     };
 };
-const mapDispatchToProps = (dispatch:Dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         updateNewMessageBody: (text: string) => {
             dispatch(ChangeMessageTextActionType(text));
@@ -105,5 +108,5 @@ const mapDispatchToProps = (dispatch:Dispatch) => {
 };
 
 
-const SuperDialogsContainer = connect(mapStateToProps,mapDispatchToProps)(Dialogs);
+const SuperDialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
 
