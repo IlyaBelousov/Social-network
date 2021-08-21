@@ -1,6 +1,13 @@
-import React from 'react';
 import {connect} from 'react-redux';
-import {Users, UsersMapDispatchToProps, UsersMapStateToProps} from './Users'
+import {Users,UsersMapStateToProps} from './Users'
+import {
+    Follow,
+    SetCurrentPage,
+    SetToggleIsFetching,
+    SetTotalUsersCount,
+    SetUsers,
+    UnFollow
+} from '../../redux/users-reducer';
 
 
-export const UsersContainer=connect(UsersMapStateToProps,UsersMapDispatchToProps)(Users)
+export const UsersContainer=connect(UsersMapStateToProps, {Follow,UnFollow,SetUsers,SetCurrentPage,SetTotalUsersCount,SetToggleIsFetching})(Users)
