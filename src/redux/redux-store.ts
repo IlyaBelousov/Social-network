@@ -7,11 +7,9 @@ import {
 } from './profile-reducer';
 import {ChangeMessageTextActionType, DialogsReducer, SendMessageActionCreator} from './dialogs-reducer';
 import {
-    FollowAC,
-    SetCurrentPageAC,
-    SetIsFetchingAC,
-    SetTotalUsersCountAC,
-    SetUsersAC, UnFollowAC,
+    Follow,
+    SetCurrentPage,
+    SetToggleIsFetching, SetTotalUsersCount, SetUsers, UnFollow,
     UsersReducer
 } from './users-reducer';
 
@@ -34,10 +32,10 @@ export type DialogsActionType =
 
 
 export type UsersActionType =
-    ReturnType<typeof FollowAC>
-    | ReturnType<typeof SetUsersAC>
-    | ReturnType<typeof SetCurrentPageAC>
-    | ReturnType<typeof SetTotalUsersCountAC>
-    | ReturnType<typeof SetIsFetchingAC>
-    | ReturnType<typeof UnFollowAC>
+    ReturnType<typeof Follow>
+    | ReturnType<typeof SetUsers>
+    | ReturnType<typeof SetCurrentPage>
+    | ReturnType<typeof SetTotalUsersCount>
+    | ReturnType<typeof SetToggleIsFetching>
+    | ReturnType<typeof UnFollow>
 

@@ -89,23 +89,23 @@ export const UsersReducer = (state = UsersInitialState, action: ActionsType): Us
     }
 };
 
-export const FollowAC = (userID: number) => {
+export const Follow = (userID: number) => {
     return {type: FOLLOW, userID} as const;
 };
-export const UnFollowAC = (userID: number) => {
+export const UnFollow = (userID: number) => {
     return {type: UNFOLLOW, userID} as const;
 };
 
-export const SetUsersAC = (items: Array<UserDataType>) => {
+export const SetUsers = (items: Array<UserDataType>) => {
     return {type: SET_USERS, items} as const;
 };
-export const SetCurrentPageAC = (currentPage: number) => {
+export const SetCurrentPage = (currentPage: number) => {
     return {type: SET_CURRENT_PAGE, currentPage} as const;
 };
-export const SetTotalUsersCountAC = (totalCount: number) => {
+export const SetTotalUsersCount = (totalCount: number) => {
     return {type: SET_TOTAL_USERS_COUNT, totalCount} as const;
 };
-export const SetIsFetchingAC = (isFetching: boolean) => {
+export const SetToggleIsFetching = (isFetching: boolean) => {
     return {
         type: TOGGLE_IS_FETCHING,
         isFetching
