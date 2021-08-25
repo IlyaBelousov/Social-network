@@ -2,17 +2,12 @@ import React from 'react';
 import User from './User';
 import s from './User.module.css';
 import {AppStateType} from '../../redux/redux-store';
-import {Dispatch} from 'redux';
 import {
-    FollowAC,
-    SetCurrentPageAC,
-    SetIsFetchingAC,
-    SetTotalUsersCountAC,
-    SetUsersAC,
     UserDataType
 } from '../../redux/users-reducer';
 import axios from 'axios';
 import {Preloader} from '../../common/Preloader';
+import { NavLink } from 'react-router-dom';
 
 
 type UsersPropsType = UsersMapStateToPropsType & UsersMapDispatchToPropsType
@@ -25,7 +20,8 @@ type UsersMapStateToPropsType = {
     isFetching: boolean
 }
 type UsersMapDispatchToPropsType = {
-    follow: (userID: number) => void
+    Follow: (userID: number) => void
+    UnFollow: (userID: number) => void
     setUsers: (items: Array<UserDataType>) => void
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
@@ -78,24 +74,30 @@ export class Users extends React.Component<UsersPropsType> {
                 {
                     this.props.items.map(u => {
                         const FollowHandler = () => {
-                            this.props.follow(u.id);
+                            this.props.Follow(u.id);
+                        };
+                        const UnFollowHandler = () => {
+                            this.props.UnFollow(u.id);
                         };
                         return (
                             <div key={u.id} className={s.wrapper}>
                                 <div className={s.container}>
                                     <div className={s.usersBlock}>
-                                        <User key={u.id}
-                                              name={u.name}
-                                              photoUrl={u.photos.large}
-                                              status={u.status}
-                                        />
+                                        <NavLink to={`/profile/${u.id}`}>
+                                            <User key={u.id}
+                                                  name={u.name}
+                                                  photoUrl={u.photos.large}
+                                                  status={u.status}
+                                                  id={u.id}
+                                            />
+                                        </NavLink>
 
                                         <div>
-                                            <button
-                                                onClick={FollowHandler}
-                                                className={s.userButton}>
-                                                {u.followed ? 'UNFOLLOW' : 'FOLLOW'}
-                                            </button>
+                                            {u.followed ?
+                                                <button onClick={UnFollowHandler}
+                                                        className={s.userButton}>UNFOLLOW</button>
+                                                : <button onClick={FollowHandler}
+                                                          className={s.userButton}>FOLLOW</button>}
                                         </div>
                                     </div>
 
@@ -114,24 +116,5 @@ export const UsersMapStateToProps = (state: AppStateType): UsersMapStateToPropsT
         totalCount: state.usersPage.totalCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-    };
-};
-export const UsersMapDispatchToProps = (dispatch: Dispatch): UsersMapDispatchToPropsType => {
-    return {
-        follow: (userID: number) => {
-            dispatch(FollowAC(userID));
-        },
-        setUsers: (items: Array<UserDataType>) => {
-            dispatch(SetUsersAC(items));
-        },
-        setCurrentPage: (currentPage: number) => {
-            dispatch(SetCurrentPageAC(currentPage));
-        },
-        setTotalUsersCount: (totalCount: number) => {
-            dispatch(SetTotalUsersCountAC(totalCount));
-        },
-        SetToggleIsFetching: (isFetching: boolean) => {
-            dispatch(SetIsFetchingAC(isFetching));
-        }
     };
 };

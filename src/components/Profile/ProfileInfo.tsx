@@ -1,10 +1,14 @@
 import React from 'react';
 import s from './Profile.module.css';
 
-const ProfileInfo = () => {
+type ProfileInfoPropsType = {
+    photo: string|undefined
+}
+
+const ProfileInfo = (props: ProfileInfoPropsType) => {
     return (
         <div className={s.profileInformation}>
-            <img src="https://insights.mgm-tp.com/wp-content/uploads/2019/04/default-avatar.png"
+            <img src={props.photo}
                  className={s.profileImage}/>
 
             <div className={s.person}>

@@ -5,6 +5,7 @@ type UserPropsType = {
     name: string
     photoUrl: string | null
     status?: string
+    id:number
 }
 
 const User = (props: UserPropsType) => {
