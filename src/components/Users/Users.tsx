@@ -22,9 +22,9 @@ type UsersMapStateToPropsType = {
 type UsersMapDispatchToPropsType = {
     Follow: (userID: number) => void
     UnFollow: (userID: number) => void
-    setUsers: (items: Array<UserDataType>) => void
-    setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalCount: number) => void
+    SetUsers: (items: Array<UserDataType>) => void
+    SetCurrentPage: (currentPage: number) => void
+    SetTotalUsersCount: (totalCount: number) => void
     SetToggleIsFetching: (isFetching: boolean) => void
 }
 
@@ -35,18 +35,18 @@ export class Users extends React.Component<UsersPropsType> {
         axios.get<{ items: UserDataType[], totalCount: number }>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
                 this.props.SetToggleIsFetching(false);
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(200);
+                this.props.SetUsers(response.data.items);
+                this.props.SetTotalUsersCount(200);
             });
     }
 
     onPageChanged(pageNumber: number) {
         this.props.SetToggleIsFetching(true);
-        this.props.setCurrentPage(pageNumber);
+        this.props.SetCurrentPage(pageNumber);
         axios.get<{ items: UserDataType[] }>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
             .then(response => {
                 this.props.SetToggleIsFetching(false);
-                this.props.setUsers(response.data.items);
+                this.props.SetUsers(response.data.items);
             });
     }
 
