@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bbcb8444-ab99-4f3d-a2fa-73c1bd521b96" name="Default Changelist" comment="WithRouter">
+    <list default="true" id="bbcb8444-ab99-4f3d-a2fa-73c1bd521b96" name="Default Changelist" comment="Follow, Unfollow api">
+      <change afterPath="$PROJECT_DIR$/src/api/api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Profile/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Profile.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Users/Users.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Users/Users.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/users-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/users-reducer.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +172,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629927928837</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Follow, Unfollow api">
+      <created>1630090861833</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1630090861833</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,6 +205,7 @@
     <MESSAGE value="Pagination" />
     <MESSAGE value="Preloader" />
     <MESSAGE value="Profile api" />
-    <option name="LAST_COMMIT_MESSAGE" value="Profile api" />
+    <MESSAGE value="Follow, Unfollow api" />
+    <option name="LAST_COMMIT_MESSAGE" value="Follow, Unfollow api" />
   </component>
 </project>

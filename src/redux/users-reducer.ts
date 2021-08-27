@@ -33,7 +33,7 @@ let UsersInitialState: UserStateType = {
     items: [],
     totalCount: 0,
     error: null,
-    pageSize: 5,
+    pageSize: 10,
     currentPage: 1,
     isFetching: false
 };

@@ -5,9 +5,9 @@ import {AppStateType} from '../../redux/redux-store';
 import {
     UserDataType
 } from '../../redux/users-reducer';
-import axios from 'axios';
 import {Preloader} from '../../common/Preloader';
 import {NavLink} from 'react-router-dom';
+import {Follow, GetUsers, UnFollow} from '../../api/api';
 
 
 type UsersPropsType = UsersMapStateToPropsType & UsersMapDispatchToPropsType
@@ -32,33 +32,21 @@ export class Users extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         this.props.SetToggleIsFetching(true);
-        axios.get<{ items: UserDataType[], totalCount: number }>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-            {
-                withCredentials: true,
-                headers: {
-                    'API-KEY': '4e9f6c7c-553d-4c3d-8aa0-0bbb01a71677'
-                }
-            })
+        GetUsers(this.props.currentPage, this.props.pageSize)
             .then(response => {
                 this.props.SetToggleIsFetching(false);
-                this.props.SetUsers(response.data.items);
-                this.props.SetTotalUsersCount(200);
+                this.props.SetUsers(response.items);
+                this.props.SetTotalUsersCount(500);
             });
     }
 
     onPageChanged(pageNumber: number) {
         this.props.SetToggleIsFetching(true);
         this.props.SetCurrentPage(pageNumber);
-        axios.get<{ items: UserDataType[] }>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,
-            {
-                withCredentials: true,
-                headers: {
-                    'API-KEY': '4e9f6c7c-553d-4c3d-8aa0-0bbb01a71677'
-                }
-            })
+        GetUsers(pageNumber, this.props.pageSize)
             .then(response => {
                 this.props.SetToggleIsFetching(false);
-                this.props.SetUsers(response.data.items);
+                this.props.SetUsers(response.items);
             });
     }
 
@@ -85,12 +73,6 @@ export class Users extends React.Component<UsersPropsType> {
                 {this.props.isFetching && <Preloader/>}
                 {
                     this.props.items.map(u => {
-                        const FollowHandler = () => {
-                            this.props.Follow(u.id);
-                        };
-                        const UnFollowHandler = () => {
-                            this.props.UnFollow(u.id);
-                        };
                         return (
                             <div key={u.id} className={s.wrapper}>
                                 <div className={s.container}>
@@ -107,13 +89,7 @@ export class Users extends React.Component<UsersPropsType> {
                                         <div>
                                             {u.followed ?
                                                 <button onClick={() =>
-                                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
-                                                        {
-                                                            withCredentials: true,
-                                                            headers: {
-                                                                'API-KEY': '4e9f6c7c-553d-4c3d-8aa0-0bbb01a71677'
-                                                            }
-                                                        })
+                                                    UnFollow(u.id)
                                                         .then(response => {
                                                             if (response.data.resultCode === 0) {
                                                                 this.props.UnFollow(u.id);
@@ -123,21 +99,15 @@ export class Users extends React.Component<UsersPropsType> {
                                                 }
                                                         className={s.userButton}>UNFOLLOW</button>
 
-                                                :  <button onClick={() =>
-                                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,{},
-                                                        {
-                                                            withCredentials: true,
-                                                            headers: {
-                                                                'API-KEY': '4e9f6c7c-553d-4c3d-8aa0-0bbb01a71677'
-                                                            }
-                                                        })
+                                                : <button onClick={() =>
+                                                    Follow(u.id)
                                                         .then(response => {
                                                             if (response.data.resultCode === 0) {
                                                                 this.props.Follow(u.id);
                                                             }
                                                         })
                                                 }
-                                                           className={s.userButton}>FOLLOW</button>
+                                                          className={s.userButton}>FOLLOW</button>
                                             }
                                         </div>
                                     </div>
