@@ -12,16 +12,21 @@ import {
     SetToggleIsFetching, SetTotalUsersCount, SetUsers, UnFollow,
     UsersReducer
 } from './users-reducer';
+import {AuthReducer, SetAuthData} from './auth-reducer';
 
 let rootReducer = combineReducers({
     profilePage: ProfileReducer,
     dialogsPage: DialogsReducer,
-    usersPage: UsersReducer
+    usersPage: UsersReducer,
+    auth: AuthReducer,
 });
 export type AppStateType = ReturnType<typeof rootReducer>
 export const store = createStore(rootReducer);
 
-export type ActionsType = ProfileActionType | DialogsActionType | UsersActionType
+export type ActionsType = ProfileActionType
+    | DialogsActionType
+    | UsersActionType
+    | AuthActionType
 export type ProfileActionType =
     ReturnType<typeof AddNewPostActionCreator>
     | ReturnType<typeof ChangeNewPostTextActionCreator>
@@ -38,4 +43,5 @@ export type UsersActionType =
     | ReturnType<typeof SetTotalUsersCount>
     | ReturnType<typeof SetToggleIsFetching>
     | ReturnType<typeof UnFollow>
+export type AuthActionType = ReturnType<typeof SetAuthData>
 

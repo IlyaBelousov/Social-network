@@ -74,7 +74,6 @@ export const ProfileReducer = (state = initialState, action: ActionsType): Profi
             return {...stateCopy};
         }
         case SET_USER_PROFILE: {
-            debugger
             return {
                 ...state,
                 userProfile: {...action.profileData}

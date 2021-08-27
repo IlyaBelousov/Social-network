@@ -18,7 +18,6 @@ type ProfilePropsType = RouteComponentProps<PathParamsType> & PropsType
 
 export class Profile extends React.Component<ProfilePropsType> {
     componentDidMount() {
-        console.log(this.props);
         let userId = this.props.match.params.userId;
         if (!userId) {
             userId = '2';
@@ -26,7 +25,6 @@ export class Profile extends React.Component<ProfilePropsType> {
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
             .then(response => {
                 this.props.SetUserProfile(response.data);
-                console.log(this.props.userProfile);
             });
     }
 
