@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 
 type PathParamsType = {
-    userId: string|undefined
+    userId: string | undefined
 }
 
 type PropsType = ProfileMapStateToPropsType & MapDispatchToPropsType
@@ -22,7 +22,13 @@ export class Profile extends React.Component<ProfilePropsType> {
         if (!userId) {
             userId = '2';
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`,
+            {
+                withCredentials: true,
+                headers: {
+                    'API-KEY': '4e9f6c7c-553d-4c3d-8aa0-0bbb01a71677'
+                }
+            })
             .then(response => {
                 this.props.SetUserProfile(response.data);
             });

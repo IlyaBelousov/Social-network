@@ -7,7 +7,7 @@ import {
 } from '../../redux/users-reducer';
 import axios from 'axios';
 import {Preloader} from '../../common/Preloader';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 
 type UsersPropsType = UsersMapStateToPropsType & UsersMapDispatchToPropsType
@@ -32,7 +32,13 @@ export class Users extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         this.props.SetToggleIsFetching(true);
-        axios.get<{ items: UserDataType[], totalCount: number }>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        axios.get<{ items: UserDataType[], totalCount: number }>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
+            {
+                withCredentials: true,
+                headers: {
+                    'API-KEY': '4e9f6c7c-553d-4c3d-8aa0-0bbb01a71677'
+                }
+            })
             .then(response => {
                 this.props.SetToggleIsFetching(false);
                 this.props.SetUsers(response.data.items);
@@ -43,7 +49,13 @@ export class Users extends React.Component<UsersPropsType> {
     onPageChanged(pageNumber: number) {
         this.props.SetToggleIsFetching(true);
         this.props.SetCurrentPage(pageNumber);
-        axios.get<{ items: UserDataType[] }>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+        axios.get<{ items: UserDataType[] }>(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,
+            {
+                withCredentials: true,
+                headers: {
+                    'API-KEY': '4e9f6c7c-553d-4c3d-8aa0-0bbb01a71677'
+                }
+            })
             .then(response => {
                 this.props.SetToggleIsFetching(false);
                 this.props.SetUsers(response.data.items);
@@ -94,10 +106,39 @@ export class Users extends React.Component<UsersPropsType> {
 
                                         <div>
                                             {u.followed ?
-                                                <button onClick={UnFollowHandler}
+                                                <button onClick={() =>
+                                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                                                        {
+                                                            withCredentials: true,
+                                                            headers: {
+                                                                'API-KEY': '4e9f6c7c-553d-4c3d-8aa0-0bbb01a71677'
+                                                            }
+                                                        })
+                                                        .then(response => {
+                                                            if (response.data.resultCode === 0) {
+                                                                this.props.UnFollow(u.id);
+                                                            }
+                                                        })
+
+                                                }
                                                         className={s.userButton}>UNFOLLOW</button>
-                                                : <button onClick={FollowHandler}
-                                                          className={s.userButton}>FOLLOW</button>}
+
+                                                :  <button onClick={() =>
+                                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,{},
+                                                        {
+                                                            withCredentials: true,
+                                                            headers: {
+                                                                'API-KEY': '4e9f6c7c-553d-4c3d-8aa0-0bbb01a71677'
+                                                            }
+                                                        })
+                                                        .then(response => {
+                                                            if (response.data.resultCode === 0) {
+                                                                this.props.Follow(u.id);
+                                                            }
+                                                        })
+                                                }
+                                                           className={s.userButton}>FOLLOW</button>
+                                            }
                                         </div>
                                     </div>
 
