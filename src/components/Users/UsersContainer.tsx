@@ -6,7 +6,7 @@ import {
     UnFollow,
     SetUsers,
     SetCurrentPage,
-    SetTotalUsersCount
+    SetTotalUsersCount, SetFollowInProgress
 } from '../../redux/users-reducer';
 
 
@@ -18,4 +18,5 @@ export const UsersContainer = connect(UsersMapStateToProps, {
     SetCurrentPage,
     SetTotalUsersCount,
     SetToggleIsFetching,
+    FollowInProgress: SetFollowInProgress
 })(Users);

@@ -3,6 +3,7 @@ import User from './User';
 import s from './User.module.css';
 import {AppStateType} from '../../redux/redux-store';
 import {
+    SetFollowInProgress,
     UserDataType
 } from '../../redux/users-reducer';
 import {Preloader} from '../../common/Preloader';
@@ -18,6 +19,7 @@ type UsersMapStateToPropsType = {
     totalCount: number
     currentPage: number
     isFetching: boolean
+    followInProgress: number[]
 }
 type UsersMapDispatchToPropsType = {
     Follow: (userID: number) => void
@@ -26,6 +28,7 @@ type UsersMapDispatchToPropsType = {
     SetCurrentPage: (currentPage: number) => void
     SetTotalUsersCount: (totalCount: number) => void
     SetToggleIsFetching: (isFetching: boolean) => void
+    FollowInProgress: (isFollow: boolean, id: number) => void
 }
 
 export class Users extends React.Component<UsersPropsType> {
@@ -88,25 +91,33 @@ export class Users extends React.Component<UsersPropsType> {
 
                                         <div>
                                             {u.followed ?
-                                                <button onClick={() =>
+                                                <button disabled={this.props.followInProgress.some(id=>id===u.id)} onClick={() => {
+                                                    this.props.FollowInProgress(true, u.id);
                                                     UnFollow(u.id)
                                                         .then(response => {
                                                             if (response.data.resultCode === 0) {
                                                                 this.props.UnFollow(u.id);
                                                             }
-                                                        })
+                                                            this.props.FollowInProgress(false, u.id);
+                                                        });
 
+                                                }
                                                 }
                                                         className={s.userButton}>UNFOLLOW</button>
 
-                                                : <button onClick={() =>
-                                                    Follow(u.id)
-                                                        .then(response => {
-                                                            if (response.data.resultCode === 0) {
-                                                                this.props.Follow(u.id);
-                                                            }
-                                                        })
-                                                }
+                                                : <button disabled={this.props.followInProgress.some(id=>id===u.id)}
+                                                          onClick={() => {
+                                                              this.props.FollowInProgress(true, u.id);
+                                                              Follow(u.id)
+                                                                  .then(response => {
+                                                                      if (response.data.resultCode === 0) {
+                                                                          this.props.Follow(u.id);
+                                                                      }
+                                                                      this.props.FollowInProgress(false, u.id);
+                                                                  });
+
+                                                          }
+                                                          }
                                                           className={s.userButton}>FOLLOW</button>
                                             }
                                         </div>
@@ -127,5 +138,6 @@ export const UsersMapStateToProps = (state: AppStateType): UsersMapStateToPropsT
         totalCount: state.usersPage.totalCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        followInProgress: state.usersPage.followInProgress,
     };
 };

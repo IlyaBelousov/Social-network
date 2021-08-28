@@ -6,6 +6,7 @@ const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const FOLLOW_IN_PROGRESS = 'FOLLOW_IN_PROGRESS';
 
 
 type PhotosType = {
@@ -19,6 +20,8 @@ export type UserStateType = {
     pageSize: number
     currentPage: number
     isFetching: boolean
+    followInProgress: number[]
+
 }
 
 export type UserDataType = {
@@ -35,11 +38,20 @@ let UsersInitialState: UserStateType = {
     error: null,
     pageSize: 10,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followInProgress: [],
 };
 
 export const UsersReducer = (state = UsersInitialState, action: ActionsType): UserStateType => {
     switch (action.type) {
+        case FOLLOW_IN_PROGRESS: {
+            return {
+                ...state,
+                followInProgress: action.isFollow
+                    ? [...state.followInProgress, action.id]
+                    : [...state.followInProgress.filter(id => id !== action.id)],
+            };
+        }
         case FOLLOW: {
             return {
                 ...state,
@@ -109,5 +121,12 @@ export const SetToggleIsFetching = (isFetching: boolean) => {
     return {
         type: TOGGLE_IS_FETCHING,
         isFetching
+    } as const;
+};
+export const SetFollowInProgress = (isFollow: boolean, id: number) => {
+    return {
+        type: FOLLOW_IN_PROGRESS,
+        isFollow,
+        id,
     } as const;
 };

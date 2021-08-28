@@ -7,7 +7,7 @@ import {
 } from './profile-reducer';
 import {ChangeMessageTextActionType, DialogsReducer, SendMessageActionCreator} from './dialogs-reducer';
 import {
-    Follow,
+    Follow, SetFollowInProgress,
     SetCurrentPage,
     SetToggleIsFetching, SetTotalUsersCount, SetUsers, UnFollow,
     UsersReducer
@@ -43,5 +43,6 @@ export type UsersActionType =
     | ReturnType<typeof SetTotalUsersCount>
     | ReturnType<typeof SetToggleIsFetching>
     | ReturnType<typeof UnFollow>
+    | ReturnType<typeof SetFollowInProgress>
 export type AuthActionType = ReturnType<typeof SetAuthData>
 
