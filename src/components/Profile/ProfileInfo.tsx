@@ -3,6 +3,16 @@ import s from './Profile.module.css';
 
 type ProfileInfoPropsType = {
     photo: string|undefined
+    contacts: {
+        github: string
+        facebook: string
+        website: string,
+        vk: string
+        twitter: string
+        instagram: string,
+    }
+    fullName:string
+    lookingForAJobDescription:string
 }
 
 const ProfileInfo = (props: ProfileInfoPropsType) => {
@@ -12,9 +22,9 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                  className={s.profileImage}/>
 
             <div className={s.person}>
-                <div className={s.personDescription}> Ilya</div>
-                <div className={s.personDescription}> 26 y.o.</div>
-                <div className={s.personDescription}>Saint-Petersburg</div>
+                <div className={s.personDescription}> {props.fullName}</div>
+                <div className={s.personDescription}>{props.lookingForAJobDescription}</div>
+                <div className={s.personDescription}>{props.contacts.vk}</div>
             </div>
         </div>
 

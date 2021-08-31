@@ -7,20 +7,21 @@ const SET_USER_PROFILE = 'SET_USER_PROFILE';
 type PostType = { id: number, username: string, message: string }
 export type PostsType = Array<PostType>
 export type UserProfileType = {
-    aboutMe?: string
-    contacts?: {
-        facebook?: string
-        website?: string,
-        vk?: string
-        twitter?: string
-        instagram?: string,
+    aboutMe: string
+    contacts: {
+        github: string
+        facebook: string
+        website: string,
+        vk: string
+        twitter: string
+        instagram: string,
     }
-    fullName?: string
-    lookingForAJob?: boolean
-    lookingForAJobDescription?: string
-    photos?: {
-        small?: string
-        large?: string
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    photos: {
+        small: string
+        large: string
     }
     userId?: number | null
 }
@@ -39,6 +40,7 @@ let initialState: ProfileInitialStateType = {
     userProfile: {
         aboutMe: '',
         contacts: {
+            github: '',
             facebook: '',
             website: '',
             vk: '',
