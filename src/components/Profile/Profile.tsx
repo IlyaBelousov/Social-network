@@ -6,7 +6,9 @@ import {PostWrapper} from './Posts/PostsWrapper';
 import {SetUserProfileThunk, UserProfileType} from '../../redux/profile-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import {connect} from 'react-redux';
-import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
+import {compose} from 'redux';
 
 
 type PathParamsType = {
@@ -16,7 +18,7 @@ export type MapDispatchToPropsType = {
     SetUserProfileThunk: (userId: number) => void
 }
 type ProfileMapStateToPropsType = {
-    isAuth:boolean
+    isAuth: boolean
     userProfile: UserProfileType
     contacts: {
         github: string
@@ -44,9 +46,7 @@ export class Profile extends React.Component<ProfilePropsType> {
     }
 
     render() {
-            if (!this.props.isAuth) {
-            return <Redirect to={'/login'}/>;
-            }
+
         return <div className={s.profileCont}>
             <img className={s.mainImage}
                  src="https://images.ctfassets.net/hrltx12pl8hq/4f6DfV5DbqaQUSw0uo0mWi/ff068ff5fc855601751499d694c0111a/shutterstock_376532611.jpg?fit=fill&w=800&h=300"/>
@@ -63,7 +63,7 @@ export class Profile extends React.Component<ProfilePropsType> {
 
 const MapStateToProps = (state: AppStateType): ProfileMapStateToPropsType => {
     return {
-        isAuth:state.auth.isAuth,
+        isAuth: state.auth.isAuth,
         userProfile: state.profilePage.userProfile,
         contacts: state.profilePage.userProfile.contacts,
         fullName: state.profilePage.userProfile.fullName,
@@ -71,7 +71,12 @@ const MapStateToProps = (state: AppStateType): ProfileMapStateToPropsType => {
     };
 };
 
-const ComponentWithURLData = withRouter(Profile);
-export const ProfileContainer = connect(MapStateToProps, {SetUserProfileThunk})(ComponentWithURLData);
+
+export const ProfileContainer = compose<React.ComponentType>(
+    connect(MapStateToProps, {SetUserProfileThunk}),
+    withRouter,
+    WithAuthRedirect
+)(Profile);
+
 
 

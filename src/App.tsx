@@ -1,15 +1,14 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import  {ProfileContainer} from './components/Profile/Profile';
+import {ProfileContainer} from './components/Profile/Profile';
 import {Route} from 'react-router-dom';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
+import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import {UsersContainer} from './components/Users/UsersContainer';
-import { HeaderWithConnect} from './components/Header/HeaderContainer';
+import {HeaderWithConnect} from './components/Header/HeaderContainer';
 import {Login} from './Login/Login';
-
 
 
 function App() {
@@ -24,7 +23,7 @@ function App() {
                     <ProfileContainer/>}
                 />
                 <Route path="/dialogs" render={() =>
-                    <DialogsContainer />}/>
+                    <DialogsContainer/>}/>
                 <Route path="/users" render={() =>
                     <UsersContainer/>}/>
                 <Route path="/music" render={() => <Music/>}/>
@@ -35,4 +34,5 @@ function App() {
 
     );
 }
+
 export default App;

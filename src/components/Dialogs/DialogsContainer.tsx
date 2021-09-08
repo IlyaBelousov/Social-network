@@ -3,16 +3,17 @@ import s from './Dialogs.module.css';
 import {
     AppStateType
 } from '../../redux/redux-store';
-import {NavLink, Redirect} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import User from '../Users/User';
 import Message from './Message';
 import {connect} from 'react-redux';
-import {Dispatch} from 'redux';
+import {compose, Dispatch} from 'redux';
 import {
     ChangeMessageTextActionType,
     DialogsReducerInitialStateType,
     SendMessageActionCreator
 } from '../../redux/dialogs-reducer';
+import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 
 type DialogsType =
     { sendMessage: () => void, updateNewMessageBody: (text: string) => void }
@@ -41,12 +42,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 };
 
 
-const DialogsContainer = () => {
-    return <SuperDialogsContainer/>;
-};
-
-export default DialogsContainer;
-
 type DialogItemType = {
     id: number
     username: string
@@ -64,9 +59,7 @@ export const DialogItem = (props: DialogItemType) => {
 
 
 export const Dialogs = (props: DialogsType) => {
-    if (!props.isAuth) {
-        return <Redirect to={'/login'}/>;
-    }
+
     let messageValue = props.dialogsPage.newMessageText;
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -114,6 +107,10 @@ export const Dialogs = (props: DialogsType) => {
     </div>;
 };
 
+export const DialogsContainer = compose<React.ComponentType>(
+    connect(MapStateToProps, mapDispatchToProps),
+    WithAuthRedirect,
+)(Dialogs);
 
-const SuperDialogsContainer = connect(MapStateToProps, mapDispatchToProps)(Dialogs);
+
 

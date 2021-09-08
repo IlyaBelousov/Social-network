@@ -6,7 +6,7 @@ import {
     UserDataType
 } from '../../redux/users-reducer';
 import {Preloader} from '../../common/Preloader';
-import {NavLink, Redirect} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 
 
@@ -38,9 +38,6 @@ export class Users extends React.Component<UsersPropsType> {
     }
 
     render() {
-        if (!this.props.isAuth) {
-            return <Redirect to={'/login'}/>;
-        }
         let pagesCount = Math.ceil(this.props.totalCount / this.props.pageSize);
         let pages = [];
         for (let i = 1; i <= pagesCount; i++) {
