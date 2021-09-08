@@ -3,12 +3,12 @@ import User from './User';
 import s from './User.module.css';
 import {AppStateType} from '../../redux/redux-store';
 import {
-    SetFollowInProgress,
     UserDataType
 } from '../../redux/users-reducer';
 import {Preloader} from '../../common/Preloader';
 import {NavLink} from 'react-router-dom';
-import {Follow, GetUsers, UnFollow} from '../../api/api';
+import {Follow, UnFollow} from '../../api/api';
+
 
 
 type UsersPropsType = UsersMapStateToPropsType & UsersMapDispatchToPropsType
@@ -24,33 +24,18 @@ type UsersMapStateToPropsType = {
 type UsersMapDispatchToPropsType = {
     Follow: (userID: number) => void
     UnFollow: (userID: number) => void
-    SetUsers: (items: Array<UserDataType>) => void
-    SetCurrentPage: (currentPage: number) => void
-    SetTotalUsersCount: (totalCount: number) => void
-    SetToggleIsFetching: (isFetching: boolean) => void
     FollowInProgress: (isFollow: boolean, id: number) => void
+    getUsersThunk: (currentPage: number, pageSize: number) => void
 }
 
 export class Users extends React.Component<UsersPropsType> {
 
     componentDidMount() {
-        this.props.SetToggleIsFetching(true);
-        GetUsers(this.props.currentPage, this.props.pageSize)
-            .then(response => {
-                this.props.SetToggleIsFetching(false);
-                this.props.SetUsers(response.items);
-                this.props.SetTotalUsersCount(500);
-            });
+        this.props.getUsersThunk(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged(pageNumber: number) {
-        this.props.SetToggleIsFetching(true);
-        this.props.SetCurrentPage(pageNumber);
-        GetUsers(pageNumber, this.props.pageSize)
-            .then(response => {
-                this.props.SetToggleIsFetching(false);
-                this.props.SetUsers(response.items);
-            });
+        this.props.getUsersThunk(pageNumber, this.props.pageSize);
     }
 
     render() {
@@ -91,21 +76,22 @@ export class Users extends React.Component<UsersPropsType> {
 
                                         <div>
                                             {u.followed ?
-                                                <button disabled={this.props.followInProgress.some(id=>id===u.id)} onClick={() => {
-                                                    this.props.FollowInProgress(true, u.id);
-                                                    UnFollow(u.id)
-                                                        .then(response => {
-                                                            if (response.data.resultCode === 0) {
-                                                                this.props.UnFollow(u.id);
-                                                            }
-                                                            this.props.FollowInProgress(false, u.id);
-                                                        });
+                                                <button disabled={this.props.followInProgress.some(id => id === u.id)}
+                                                        onClick={() => {
+                                                            this.props.FollowInProgress(true, u.id);
+                                                            UnFollow(u.id)
+                                                                .then(response => {
+                                                                    if (response.data.resultCode === 0) {
+                                                                        this.props.UnFollow(u.id);
+                                                                    }
+                                                                    this.props.FollowInProgress(false, u.id);
+                                                                });
 
-                                                }
-                                                }
+                                                        }
+                                                        }
                                                         className={s.userButton}>UNFOLLOW</button>
 
-                                                : <button disabled={this.props.followInProgress.some(id=>id===u.id)}
+                                                : <button disabled={this.props.followInProgress.some(id => id === u.id)}
                                                           onClick={() => {
                                                               this.props.FollowInProgress(true, u.id);
                                                               Follow(u.id)

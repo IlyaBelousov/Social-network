@@ -1,4 +1,6 @@
 import {ActionsType} from './redux-store';
+import {GetUsers} from '../api/api';
+import {Dispatch} from 'redux';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -129,4 +131,13 @@ export const SetFollowInProgress = (isFollow: boolean, id: number) => {
         isFollow,
         id,
     } as const;
+};
+export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+    dispatch(SetToggleIsFetching(true));
+    GetUsers(currentPage, pageSize)
+        .then(response => {
+            dispatch(SetToggleIsFetching(false));
+            dispatch(SetUsers(response.items));
+            dispatch(SetTotalUsersCount(500));
+        });
 };
