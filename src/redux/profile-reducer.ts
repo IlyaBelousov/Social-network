@@ -1,4 +1,6 @@
-import {ActionsType, ProfileActionType} from './redux-store';
+import {ActionsType} from './redux-store';
+import {Dispatch} from 'redux';
+import {profileAPI} from '../api/api';
 
 const ADD_POST = 'ADD_POST';
 const CHANGE_NEW_POST_TEXT = 'CHANGE_NEW_POST_TEXT';
@@ -99,4 +101,11 @@ export const SetUserProfileActionCreator = (profileData: UserProfileType) => {
         type: SET_USER_PROFILE,
         profileData
     } as const;
+};
+
+export const SetUserProfileThunk = (userId: number) => (dispatch: Dispatch) => {
+    profileAPI.GetUserProfile(userId)
+        .then(response => {
+            dispatch(SetUserProfileActionCreator(response.data));
+        });
 };

@@ -6,14 +6,14 @@ import {
     UserDataType
 } from '../../redux/users-reducer';
 import {Preloader} from '../../common/Preloader';
-import {NavLink} from 'react-router-dom';
-import {Follow, UnFollow} from '../../api/api';
+import {NavLink, Redirect} from 'react-router-dom';
 
 
 
 type UsersPropsType = UsersMapStateToPropsType & UsersMapDispatchToPropsType
 
 type UsersMapStateToPropsType = {
+    isAuth:boolean
     items: Array<UserDataType>
     pageSize: number
     totalCount: number
@@ -22,9 +22,8 @@ type UsersMapStateToPropsType = {
     followInProgress: number[]
 }
 type UsersMapDispatchToPropsType = {
-    Follow: (userID: number) => void
-    UnFollow: (userID: number) => void
-    FollowInProgress: (isFollow: boolean, id: number) => void
+    FollowThunk: (id: number) => void
+    UnFollowThunk: (id: number) => void
     getUsersThunk: (currentPage: number, pageSize: number) => void
 }
 
@@ -39,12 +38,14 @@ export class Users extends React.Component<UsersPropsType> {
     }
 
     render() {
+        if (!this.props.isAuth) {
+            return <Redirect to={'/login'}/>;
+        }
         let pagesCount = Math.ceil(this.props.totalCount / this.props.pageSize);
         let pages = [];
         for (let i = 1; i <= pagesCount; i++) {
             pages.push(i);
         }
-
         return (
             <div>
                 <div>
@@ -77,33 +78,11 @@ export class Users extends React.Component<UsersPropsType> {
                                         <div>
                                             {u.followed ?
                                                 <button disabled={this.props.followInProgress.some(id => id === u.id)}
-                                                        onClick={() => {
-                                                            this.props.FollowInProgress(true, u.id);
-                                                            UnFollow(u.id)
-                                                                .then(response => {
-                                                                    if (response.data.resultCode === 0) {
-                                                                        this.props.UnFollow(u.id);
-                                                                    }
-                                                                    this.props.FollowInProgress(false, u.id);
-                                                                });
-
-                                                        }
-                                                        }
+                                                        onClick={() => this.props.UnFollowThunk(u.id)}
                                                         className={s.userButton}>UNFOLLOW</button>
 
                                                 : <button disabled={this.props.followInProgress.some(id => id === u.id)}
-                                                          onClick={() => {
-                                                              this.props.FollowInProgress(true, u.id);
-                                                              Follow(u.id)
-                                                                  .then(response => {
-                                                                      if (response.data.resultCode === 0) {
-                                                                          this.props.Follow(u.id);
-                                                                      }
-                                                                      this.props.FollowInProgress(false, u.id);
-                                                                  });
-
-                                                          }
-                                                          }
+                                                          onClick={() => this.props.FollowThunk(u.id)}
                                                           className={s.userButton}>FOLLOW</button>
                                             }
                                         </div>
@@ -119,6 +98,7 @@ export class Users extends React.Component<UsersPropsType> {
 
 export const UsersMapStateToProps = (state: AppStateType): UsersMapStateToPropsType => {
     return {
+        isAuth:state.auth.isAuth,
         items: state.usersPage.items,
         pageSize: state.usersPage.pageSize,
         totalCount: state.usersPage.totalCount,

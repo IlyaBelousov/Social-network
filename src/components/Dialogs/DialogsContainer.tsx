@@ -3,7 +3,7 @@ import s from './Dialogs.module.css';
 import {
     AppStateType
 } from '../../redux/redux-store';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 import User from '../Users/User';
 import Message from './Message';
 import {connect} from 'react-redux';
@@ -13,6 +13,33 @@ import {
     DialogsReducerInitialStateType,
     SendMessageActionCreator
 } from '../../redux/dialogs-reducer';
+
+type DialogsType =
+    { sendMessage: () => void, updateNewMessageBody: (text: string) => void }
+    & DialogsMapStateToPropsType
+type DialogsMapStateToPropsType = {
+    dialogsPage: DialogsReducerInitialStateType
+    isAuth: boolean
+}
+
+
+const MapStateToProps = (state: AppStateType): DialogsMapStateToPropsType => {
+    return {
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
+    };
+};
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        updateNewMessageBody: (text: string) => {
+            dispatch(ChangeMessageTextActionType(text));
+        },
+        sendMessage: () => {
+            dispatch(SendMessageActionCreator());
+        },
+    };
+};
+
 
 const DialogsContainer = () => {
     return <SuperDialogsContainer/>;
@@ -35,13 +62,11 @@ export const DialogItem = (props: DialogItemType) => {
     );
 };
 
-type DialogsType = {
-    dialogsPage: DialogsReducerInitialStateType
-    sendMessage: () => void
-    updateNewMessageBody: (text: string) => void
-}
 
 export const Dialogs = (props: DialogsType) => {
+    if (!props.isAuth) {
+        return <Redirect to={'/login'}/>;
+    }
     let messageValue = props.dialogsPage.newMessageText;
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -89,22 +114,6 @@ export const Dialogs = (props: DialogsType) => {
     </div>;
 };
 
-const mapStateToProps = (state: AppStateType) => {
-    return {
-        dialogsPage: state.dialogsPage
-    };
-};
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        updateNewMessageBody: (text: string) => {
-            dispatch(ChangeMessageTextActionType(text));
-        },
-        sendMessage: () => {
-            dispatch(SendMessageActionCreator());
-        },
-    };
-};
 
-
-const SuperDialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+const SuperDialogsContainer = connect(MapStateToProps, mapDispatchToProps)(Dialogs);
 

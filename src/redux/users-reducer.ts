@@ -1,5 +1,5 @@
 import {ActionsType} from './redux-store';
-import {GetUsers} from '../api/api';
+import {userAPI} from '../api/api';
 import {Dispatch} from 'redux';
 
 const FOLLOW = 'FOLLOW';
@@ -103,10 +103,10 @@ export const UsersReducer = (state = UsersInitialState, action: ActionsType): Us
     }
 };
 
-export const Follow = (userID: number) => {
+export const FollowActionCreator = (userID: number) => {
     return {type: FOLLOW, userID} as const;
 };
-export const UnFollow = (userID: number) => {
+export const UnFollowActionCreator = (userID: number) => {
     return {type: UNFOLLOW, userID} as const;
 };
 
@@ -134,10 +134,31 @@ export const SetFollowInProgress = (isFollow: boolean, id: number) => {
 };
 export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(SetToggleIsFetching(true));
-    GetUsers(currentPage, pageSize)
+    userAPI.GetUsers(currentPage, pageSize)
         .then(response => {
             dispatch(SetToggleIsFetching(false));
             dispatch(SetUsers(response.items));
             dispatch(SetTotalUsersCount(500));
+            dispatch(SetCurrentPage(currentPage));
+        });
+};
+export const UnFollowThunk = (id: number) => (dispatch: Dispatch) => {
+    dispatch(SetFollowInProgress(true, id));
+    userAPI.UnFollow(id)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(UnFollowActionCreator(id));
+            }
+            dispatch(SetFollowInProgress(false, id));
+        });
+};
+export const FollowThunk = (id: number) => (dispatch: Dispatch) => {
+    dispatch(SetFollowInProgress(true, id));
+    userAPI.Follow(id)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(FollowActionCreator(id));
+            }
+            dispatch(SetFollowInProgress(false, id));
         });
 };

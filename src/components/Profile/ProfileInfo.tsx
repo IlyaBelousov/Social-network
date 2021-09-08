@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Profile.module.css';
 
 type ProfileInfoPropsType = {
-    photo: string|undefined
+    photo: string | undefined
     contacts: {
         github: string
         facebook: string
@@ -11,9 +11,10 @@ type ProfileInfoPropsType = {
         twitter: string
         instagram: string,
     }
-    fullName:string
-    lookingForAJobDescription:string
+    fullName: string
+    lookingForAJobDescription: string
 }
+
 
 const ProfileInfo = (props: ProfileInfoPropsType) => {
     return (
@@ -22,9 +23,9 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                  className={s.profileImage}/>
 
             <div className={s.person}>
-                <div className={s.personDescription}> {props.fullName}</div>
-                <div className={s.personDescription}>{props.lookingForAJobDescription}</div>
-                <div className={s.personDescription}>{props.contacts.vk}</div>
+                <h2 className={s.fullName}> {props.fullName}</h2>
+                <h4 className={s.personDescription}>{props.lookingForAJobDescription}</h4>
+                <h4 className={s.personDescription}>{props.contacts.vk}</h4>
             </div>
         </div>
 

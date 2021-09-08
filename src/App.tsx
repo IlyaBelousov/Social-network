@@ -8,6 +8,7 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import {UsersContainer} from './components/Users/UsersContainer';
 import { HeaderWithConnect} from './components/Header/HeaderContainer';
+import {Login} from './Login/Login';
 
 
 
@@ -28,6 +29,7 @@ function App() {
                     <UsersContainer/>}/>
                 <Route path="/music" render={() => <Music/>}/>
                 <Route path="/settings" render={() => <Settings/>}/>
+                <Route path="/login" render={() => <Login/>}/>
             </div>
         </div>
 

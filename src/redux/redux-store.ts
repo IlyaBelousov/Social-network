@@ -8,21 +8,12 @@ import {
 } from './profile-reducer';
 import {ChangeMessageTextActionType, DialogsReducer, SendMessageActionCreator} from './dialogs-reducer';
 import {
-    Follow, SetFollowInProgress,
+    FollowActionCreator, SetFollowInProgress,
     SetCurrentPage,
-    SetToggleIsFetching, SetTotalUsersCount, SetUsers, UnFollow,
-    UsersReducer,
+    SetToggleIsFetching, SetTotalUsersCount, SetUsers,
+    UsersReducer, UnFollowActionCreator,
 } from './users-reducer';
 import {AuthReducer, SetAuthData} from './auth-reducer';
-
-let rootReducer = combineReducers({
-    profilePage: ProfileReducer,
-    dialogsPage: DialogsReducer,
-    usersPage: UsersReducer,
-    auth: AuthReducer,
-});
-export type AppStateType = ReturnType<typeof rootReducer>
-export const store = createStore(rootReducer,applyMiddleware(thunkMiddleware));
 
 export type ActionsType = ProfileActionType
     | DialogsActionType
@@ -39,13 +30,24 @@ export type DialogsActionType =
 
 
 export type UsersActionType =
-    ReturnType<typeof Follow>
+    ReturnType<typeof FollowActionCreator>
     | ReturnType<typeof SetUsers>
     | ReturnType<typeof SetCurrentPage>
     | ReturnType<typeof SetTotalUsersCount>
     | ReturnType<typeof SetToggleIsFetching>
-    | ReturnType<typeof UnFollow>
+    | ReturnType<typeof UnFollowActionCreator>
     | ReturnType<typeof SetFollowInProgress>
 
 export type AuthActionType = ReturnType<typeof SetAuthData>
+
+
+let rootReducer = combineReducers({
+    profilePage: ProfileReducer,
+    dialogsPage: DialogsReducer,
+    usersPage: UsersReducer,
+    auth: AuthReducer,
+});
+export type AppStateType = ReturnType<typeof rootReducer>
+export const store = createStore(rootReducer,applyMiddleware(thunkMiddleware));
+
 
