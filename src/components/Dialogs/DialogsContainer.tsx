@@ -83,28 +83,30 @@ export const Dialogs = (props: DialogsType) => {
     } else {
         disable = null;
     }
-    return <div className={s.dialogsContainer}>
-        <div className={s.dialogItem}>
-            <div className={s.dialogUsers}>
-                {props.dialogsPage.dialogs
-                    .map((t: DialogItemType) =>
-                        <DialogItem id={t.id}
-                                    username={t.username}/>)
-                }
+    return (
+        <div className={s.dialogsContainer}>
+            <div className={s.dialogItem}>
+                <div className={s.dialogUsers}>
+                    {props.dialogsPage.dialogs
+                        .map((t: DialogItemType) =>
+                            <DialogItem id={t.id}
+                                        username={t.username}/>)
+                    }
+                </div>
+                <div className={s.dialogMessage}>
+                    {props.dialogsPage.messages
+                        .map(m =>
+                            <Message message={m.message}/>
+                        )
+                    }
+                </div>
             </div>
-            <div className={s.dialogMessage}>
-                {props.dialogsPage.messages
-                    .map(m =>
-                        <Message message={m.message}/>
-                    )
-                }
+            <div className={s.addMessage}>
+                <textarea onKeyPress={onKeyPressHandler} value={messageValue} onChange={onChangeHandler}/>
+                <button disabled={!!disable} onClick={sendMessageHandler}>Send</button>
             </div>
         </div>
-        <div className={s.addMessage}>
-            <textarea onKeyPress={onKeyPressHandler} value={messageValue} onChange={onChangeHandler}/>
-            <button disabled={!!disable} onClick={sendMessageHandler}>Send</button>
-        </div>
-    </div>;
+    );
 };
 
 export const DialogsContainer = compose<React.ComponentType>(

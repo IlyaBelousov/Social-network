@@ -1,8 +1,16 @@
 .dialogsContainer {
-    position: relative;
-    height: 400px;
+    height: 500px;
+    display: flex;
+    background-color: #fdfdfd;
+    border-radius: 8px 8px 8px 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
-.dialogItem{
+
+.dialogItem {
     display: grid;
     grid-template-columns: 3fr 3fr;
     grid-template-areas: 'u m';
@@ -10,11 +18,9 @@
 
 
 .addMessage {
-    position: absolute;
     bottom: 0;
     display: flex;
     align-items: flex-end
-
 }
 
 .addMessage textarea {
@@ -40,7 +46,7 @@
     margin-left: 20px;
 }
 
-.dialogUsers{
+.dialogUsers {
     display: grid;
     grid-area: u;
 }
