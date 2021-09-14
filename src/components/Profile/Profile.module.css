@@ -7,12 +7,6 @@
 
 }
 
-.profileCont .mainImage {
-    height: 150px;
-    width: 100%;
-
-}
-
 .profileInformation {
     margin-bottom: 10px;
     position: relative;
@@ -21,8 +15,8 @@
 }
 
 .profileImage {
-    height: 180px;
-    width: 160px;
+    height: 240px;
+    width: 210px;
     float: left;
     margin-top: 10px;
     margin-right: 10px;
@@ -30,8 +24,11 @@
 
 .person {
     padding: 5px;
-
-
+    display: flex;
+    flex-direction: column;
+}
+.person h2{
+    margin: 0;
 }
 
 .personDescription {
@@ -85,6 +82,9 @@
 .postItem {
     margin-top: 30px;
     display: flex;
+}
+.status{
+    outline: none;
 }
 
 

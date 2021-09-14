@@ -4,7 +4,7 @@ import {
     AddNewPostActionCreator,
     ChangeNewPostTextActionCreator,
     ProfileReducer,
-    SetUserProfileActionCreator
+    SetUserProfileActionCreator, SetUserStatus, UpdateUserStatus
 } from './profile-reducer';
 import {ChangeMessageTextActionType, DialogsReducer, SendMessageActionCreator} from './dialogs-reducer';
 import {
@@ -27,6 +27,8 @@ export type ProfileActionType =
 export type DialogsActionType =
     ReturnType<typeof SendMessageActionCreator>
     | ReturnType<typeof ChangeMessageTextActionType>
+    | ReturnType<typeof SetUserStatus>
+    | ReturnType<typeof UpdateUserStatus>
 
 
 export type UsersActionType =

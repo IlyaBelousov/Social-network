@@ -5,6 +5,8 @@ import {profileAPI} from '../api/api';
 const ADD_POST = 'ADD_POST';
 const CHANGE_NEW_POST_TEXT = 'CHANGE_NEW_POST_TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_USER_STATUS = 'SET_USER_STATUS';
+const UPDATE_USER_STATUS = 'UPDATE_USER_STATUS';
 
 type PostType = { id: number, username: string, message: string }
 export type PostsType = Array<PostType>
@@ -26,6 +28,7 @@ export type UserProfileType = {
         large: string
     }
     userId?: number | null
+    status: string
 }
 
 type ProfileInitialStateType = {
@@ -57,6 +60,7 @@ let initialState: ProfileInitialStateType = {
             large: '',
         },
         userId: null,
+        status: ''
     },
     newPostText: ''
 };
@@ -83,7 +87,18 @@ export const ProfileReducer = (state = initialState, action: ActionsType): Profi
                 userProfile: {...action.profileData}
             };
         }
-
+        case SET_USER_STATUS: {
+            return {
+                ...state,
+                userProfile: {...state.userProfile, status: action.status}
+            };
+        }
+        case UPDATE_USER_STATUS: {
+            return {
+                ...state,
+                userProfile: {...state.userProfile, status: action.status}
+            };
+        }
         default:
             return state;
     }
@@ -102,10 +117,40 @@ export const SetUserProfileActionCreator = (profileData: UserProfileType) => {
         profileData
     } as const;
 };
+export const SetUserStatus = (status: string) => {
+    return {
+        type: SET_USER_STATUS,
+        status,
+    } as const;
+};
+export const UpdateUserStatus = (status: string) => {
+    return {
+        type: UPDATE_USER_STATUS,
+        status,
+    } as const;
+};
 
 export const SetUserProfileThunk = (userId: number) => (dispatch: Dispatch) => {
     profileAPI.GetUserProfile(userId)
         .then(response => {
             dispatch(SetUserProfileActionCreator(response.data));
+        });
+    profileAPI.GetUserStatus(userId)
+        .then(response => {
+            dispatch(SetUserStatus(response.data));
+        });
+};
+export const SetUserStatusThunk = (userId: number) => (dispatch: Dispatch) => {
+    profileAPI.GetUserStatus(userId)
+        .then(response => {
+            dispatch(SetUserStatus(response.data));
+        });
+};
+export const UpdateUserStatusThunk = (status: string) => (dispatch: Dispatch) => {
+    profileAPI.UpdateStatus(status)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(SetUserStatus(status));
+            }
         });
 };

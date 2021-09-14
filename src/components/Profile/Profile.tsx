@@ -3,11 +3,16 @@ import s from './Profile.module.css';
 import ProfileInfo from './ProfileInfo';
 import MyPost from './Posts/MyPost';
 import {PostWrapper} from './Posts/PostsWrapper';
-import {SetUserProfileThunk, UserProfileType} from '../../redux/profile-reducer';
+import {
+    SetUserProfileThunk,
+    SetUserStatusThunk,
+    UpdateUserStatusThunk,
+    UserProfileType
+} from '../../redux/profile-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import {connect} from 'react-redux';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
+
 import {compose} from 'redux';
 
 
@@ -16,6 +21,8 @@ type PathParamsType = {
 }
 export type MapDispatchToPropsType = {
     SetUserProfileThunk: (userId: number) => void
+    SetUserStatusThunk: (userId: number) => void
+    UpdateUserStatusThunk: (status: string) => void
 }
 type ProfileMapStateToPropsType = {
     isAuth: boolean
@@ -30,6 +37,7 @@ type ProfileMapStateToPropsType = {
     }
     fullName: string
     lookingForAJobDescription: string
+    status:string
 }
 
 
@@ -43,14 +51,15 @@ export class Profile extends React.Component<ProfilePropsType> {
             userId = '2';
         }
         this.props.SetUserProfileThunk(+userId);
+        this.props.SetUserStatusThunk(+userId);
     }
 
     render() {
 
         return <div className={s.profileCont}>
-            <img className={s.mainImage}
-                 src="https://images.ctfassets.net/hrltx12pl8hq/4f6DfV5DbqaQUSw0uo0mWi/ff068ff5fc855601751499d694c0111a/shutterstock_376532611.jpg?fit=fill&w=800&h=300"/>
             <ProfileInfo
+                updateStatus={this.props.UpdateUserStatusThunk}
+                status={this.props.status}
                 fullName={this.props.fullName}
                 lookingForAJobDescription={this.props.lookingForAJobDescription}
                 contacts={this.props.contacts}
@@ -67,15 +76,15 @@ const MapStateToProps = (state: AppStateType): ProfileMapStateToPropsType => {
         userProfile: state.profilePage.userProfile,
         contacts: state.profilePage.userProfile.contacts,
         fullName: state.profilePage.userProfile.fullName,
-        lookingForAJobDescription: state.profilePage.userProfile.lookingForAJobDescription
+        lookingForAJobDescription: state.profilePage.userProfile.lookingForAJobDescription,
+        status:state.profilePage.userProfile.status
     };
 };
 
 
 export const ProfileContainer = compose<React.ComponentType>(
-    connect(MapStateToProps, {SetUserProfileThunk}),
+    connect(MapStateToProps, {SetUserProfileThunk, SetUserStatusThunk, UpdateUserStatusThunk}),
     withRouter,
-    WithAuthRedirect
 )(Profile);
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './Profile.module.css';
+import {ProfileStatus} from './ProfileStatus';
 
 type ProfileInfoPropsType = {
     photo: string | undefined
@@ -13,6 +14,8 @@ type ProfileInfoPropsType = {
     }
     fullName: string
     lookingForAJobDescription: string
+    status:string
+    updateStatus: (status: string) => void
 }
 
 
@@ -26,6 +29,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                 <h2 className={s.fullName}> {props.fullName}</h2>
                 <h4 className={s.personDescription}>{props.lookingForAJobDescription}</h4>
                 <h4 className={s.personDescription}>{props.contacts.vk}</h4>
+                <ProfileStatus updateStatus={props.updateStatus} status={props.status}/>
             </div>
         </div>
 

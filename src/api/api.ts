@@ -23,11 +23,17 @@ export const userAPI = {
 export const profileAPI = {
     GetUserProfile: (userId: number) => {
         return instance.get(`profile/${userId}`);
+    },
+    GetUserStatus: (userId: number) => {
+        return instance.get(`profile/status/${userId}`)
+    },
+    UpdateStatus:(status:string)=>{
+        return instance.put(`profile/status`,{status})
     }
 };
 export const authAPI = {
     me: () => {
-        return instance.get<{ data: { id: number, email: string, login: string}, resultCode: number  }>('auth/me');
+        return instance.get<{ data: { id: number, email: string, login: string }, resultCode: number }>('auth/me');
     }
 };
 

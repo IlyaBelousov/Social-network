@@ -26,7 +26,7 @@ export const UsersPost = (props: UsersPostPropsType) => {
     return <div className={s.usersPosts}>
         {
             props.post.map((p: PostMessageType) =>
-                <Post username={p.username}
+                <Post key={p.id} username={p.username}
                       id={p.id}
                       message={p.message}/>)
         }

@@ -89,14 +89,14 @@ export const Dialogs = (props: DialogsType) => {
                 <div className={s.dialogUsers}>
                     {props.dialogsPage.dialogs
                         .map((t: DialogItemType) =>
-                            <DialogItem id={t.id}
+                            <DialogItem key={t.id} id={t.id}
                                         username={t.username}/>)
                     }
                 </div>
                 <div className={s.dialogMessage}>
                     {props.dialogsPage.messages
                         .map(m =>
-                            <Message message={m.message}/>
+                            <Message key={m.id} message={m.message}/>
                         )
                     }
                 </div>
