@@ -1,5 +1,5 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
-import thunkMiddleware from 'redux-thunk'
+import thunkMiddleware from 'redux-thunk';
 import {
     AddNewPostActionCreator,
     ChangeNewPostTextActionCreator,
@@ -14,6 +14,7 @@ import {
     UsersReducer, UnFollowActionCreator,
 } from './users-reducer';
 import {AuthReducer, SetAuthData} from './auth-reducer';
+import {reducer as formReducer} from 'redux-form';
 
 export type ActionsType = ProfileActionType
     | DialogsActionType
@@ -48,8 +49,9 @@ let rootReducer = combineReducers({
     dialogsPage: DialogsReducer,
     usersPage: UsersReducer,
     auth: AuthReducer,
+    form: formReducer
 });
 export type AppStateType = ReturnType<typeof rootReducer>
-export const store = createStore(rootReducer,applyMiddleware(thunkMiddleware));
+export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 

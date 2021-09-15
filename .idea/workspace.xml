@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bbcb8444-ab99-4f3d-a2fa-73c1bd521b96" name="Default Changelist" comment="New layout">
-      <change afterPath="$PROJECT_DIR$/src/components/Profile/ProfileStatus.tsx" afterDir="false" />
+    <list default="true" id="bbcb8444-ab99-4f3d-a2fa-73c1bd521b96" name="Default Changelist" comment="HTTP put, profile status, componentDidUpdate">
+      <change afterPath="$PROJECT_DIR$/src/Login/Login.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Login/LoginForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dialogs/DialogsContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dialogs/DialogsContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/Posts/PostsWrapper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Posts/PostsWrapper.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Login/Login.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Profile/Profile.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Profile.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/ProfileInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/ProfileInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/profile-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/profile-reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Profile/ProfileStatus.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/ProfileStatus.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/redux-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/redux-store.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
@@ -122,7 +119,8 @@
       <workItem from="1631377923920" duration="614000" />
       <workItem from="1631521297580" duration="2743000" />
       <workItem from="1631601695623" duration="1242000" />
-      <workItem from="1631603341634" duration="10667000" />
+      <workItem from="1631603341634" duration="12775000" />
+      <workItem from="1631693395621" duration="4600000" />
     </task>
     <task id="LOCAL-00001" summary="Connect, shallow copy,deep copy">
       <created>1626466737786</created>
@@ -208,7 +206,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631129454477</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="HTTP put, profile status, componentDidUpdate">
+      <created>1631618175481</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1631618175481</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,6 +242,7 @@
     <MESSAGE value="Follow, Unfollow api" />
     <MESSAGE value="Axios create, DAL" />
     <MESSAGE value="New layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="New layout" />
+    <MESSAGE value="HTTP put, profile status, componentDidUpdate" />
+    <option name="LAST_COMMIT_MESSAGE" value="HTTP put, profile status, componentDidUpdate" />
   </component>
 </project>
