@@ -1,27 +1,34 @@
 import {AppStateType} from '../../../redux/redux-store';
-import AddPost from './AddPost';
+import {AddPostFormData, AddPostReduxForm} from './AddPost';
 import s from '../Profile.module.css';
 import Post from './Post';
 import React from 'react';
-import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
-import {AddNewPostActionCreator, ChangeNewPostTextActionCreator} from '../../../redux/profile-reducer';
+
 
 type PostMessageType = {
     id: number
     username: string
     message: string
 }
-export const PostWrapper = () => {
+type PostWrapperPropsType = {
+    AddNewPost: (newPost: string) => void
+}
+export const PostWrapper = (props:PostWrapperPropsType) => {
     return <div>
-        <SuperPostWrapper/>
+        <AddNewPostForm AddNewPost={props.AddNewPost}/>
         <UsersPostContainer/>
     </div>;
 };
 type UsersPostPropsType = {
-    post:Array<PostMessageType>
+    post: Array<PostMessageType>
 }
-
+const AddNewPostForm = (props:PostWrapperPropsType) => {
+    const onSubmit = (post: AddPostFormData) => {
+        props.AddNewPost(post.addPost)
+    }
+    return <AddPostReduxForm onSubmit={onSubmit}/>
+}
 export const UsersPost = (props: UsersPostPropsType) => {
     return <div className={s.usersPosts}>
         {
@@ -33,22 +40,6 @@ export const UsersPost = (props: UsersPostPropsType) => {
     </div>;
 };
 
-const mapStateToProps = (state: AppStateType) => {
-    return {
-        newPostText: state.profilePage.newPostText,
-    };
-};
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        createPost: () => {
-            dispatch(AddNewPostActionCreator());
-        },
-        updateNewPostText: (text: string) => {
-            dispatch(ChangeNewPostTextActionCreator(text));
-        }
-    };
-};
-const SuperPostWrapper = connect(mapStateToProps, mapDispatchToProps)(AddPost);
 const UsersPostMapStateToProps = (state: AppStateType) => {
     return {
         post: state.profilePage.post

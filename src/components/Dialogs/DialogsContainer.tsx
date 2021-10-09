@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css';
 import {
     AppStateType
@@ -9,14 +9,16 @@ import Message from './Message';
 import {connect} from 'react-redux';
 import {compose, Dispatch} from 'redux';
 import {
-    ChangeMessageTextActionType,
     DialogsReducerInitialStateType,
     SendMessageActionCreator
 } from '../../redux/dialogs-reducer';
 import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
+import {AddMessageDataType, AddMessageReduxForm} from "./AddMessageForm";
 
-type DialogsType =
-    { sendMessage: () => void, updateNewMessageBody: (text: string) => void }
+type DialogsType = {
+        sendMessage: (message: string) => void,
+        updateNewMessageBody: (text: string) => void
+    }
     & DialogsMapStateToPropsType
 type DialogsMapStateToPropsType = {
     dialogsPage: DialogsReducerInitialStateType
@@ -32,11 +34,8 @@ const MapStateToProps = (state: AppStateType): DialogsMapStateToPropsType => {
 };
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        updateNewMessageBody: (text: string) => {
-            dispatch(ChangeMessageTextActionType(text));
-        },
-        sendMessage: () => {
-            dispatch(SendMessageActionCreator());
+        sendMessage: (message: string) => {
+            dispatch(SendMessageActionCreator(message));
         },
     };
 };
@@ -59,29 +58,8 @@ export const DialogItem = (props: DialogItemType) => {
 
 
 export const Dialogs = (props: DialogsType) => {
-
-    let messageValue = props.dialogsPage.newMessageText;
-
-    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let text = e.currentTarget.value;
-        if (text) {
-            props.updateNewMessageBody(text);
-        }
-    };
-    const onKeyPressHandler = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (event.key === 'Enter') {
-            sendMessageHandler();
-        }
-    };
-    const sendMessageHandler = () => {
-        props.sendMessage();
-    };
-
-    let disable = null;
-    if (!messageValue) {
-        disable = 'disable';
-    } else {
-        disable = null;
+    const onSubmit = (messageData: AddMessageDataType) => {
+        props.sendMessage(messageData.newMessageBody);
     }
     return (
         <div className={s.dialogsContainer}>
@@ -102,8 +80,7 @@ export const Dialogs = (props: DialogsType) => {
                 </div>
             </div>
             <div className={s.addMessage}>
-                <textarea onKeyPress={onKeyPressHandler} value={messageValue} onChange={onChangeHandler}/>
-                <button disabled={!!disable} onClick={sendMessageHandler}>Send</button>
+                <AddMessageReduxForm onSubmit={onSubmit}/>
             </div>
         </div>
     );

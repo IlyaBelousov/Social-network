@@ -68,10 +68,8 @@ export const ProfileReducer = (state = initialState, action: ActionsType): Profi
     switch (action.type) {
         case ADD_POST : {
             let stateCopy = {...state, post: [...state.post]};
-            let newPostMessage = stateCopy.newPostText;
-            let newPost = {id: 6, message: newPostMessage, username: 'Htoto'};
+            let newPost = {id: 6, message: action.newPost, username: 'Htoto'};
             stateCopy.post.unshift(newPost);
-            stateCopy.newPostText = '';
             return {...stateCopy};
 
         }
@@ -105,8 +103,8 @@ export const ProfileReducer = (state = initialState, action: ActionsType): Profi
 };
 
 
-export const AddNewPostActionCreator = () => {
-    return {type: ADD_POST} as const;
+export const AddNewPost = (newPost:string) => {
+    return {type: ADD_POST,newPost} as const;
 };
 export const ChangeNewPostTextActionCreator = (text: string) => {
     return {type: CHANGE_NEW_POST_TEXT, text} as const;

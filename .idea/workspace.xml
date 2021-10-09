@@ -2,16 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bbcb8444-ab99-4f3d-a2fa-73c1bd521b96" name="Default Changelist" comment="HTTP put, profile status, componentDidUpdate">
-      <change afterPath="$PROJECT_DIR$/src/Login/Login.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Login/LoginForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Dialogs/AddMessageForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Login/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/Profile.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Profile.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/ProfileStatus.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/ProfileStatus.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dialogs/Dialogs.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dialogs/Dialogs.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dialogs/DialogsContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dialogs/DialogsContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Profile/Posts/AddPost.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Posts/AddPost.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Profile/Posts/PostsWrapper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Posts/PostsWrapper.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Profile/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Users/User.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Users/User.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/dialogs-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/dialogs-reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/profile-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/profile-reducer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/redux-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/redux-store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,11 +41,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../js-advance" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="ts.external.directory.path" value="C:\Social-network\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\my-projects\Social-network\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -121,6 +122,11 @@
       <workItem from="1631601695623" duration="1242000" />
       <workItem from="1631603341634" duration="12775000" />
       <workItem from="1631693395621" duration="4600000" />
+      <workItem from="1633619476418" duration="2193000" />
+      <workItem from="1633689096602" duration="197000" />
+      <workItem from="1633717293179" duration="1247000" />
+      <workItem from="1633727659117" duration="2772000" />
+      <workItem from="1633791547716" duration="7198000" />
     </task>
     <task id="LOCAL-00001" summary="Connect, shallow copy,deep copy">
       <created>1626466737786</created>

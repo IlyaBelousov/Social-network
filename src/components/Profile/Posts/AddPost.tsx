@@ -1,38 +1,23 @@
-import React, {ChangeEvent, KeyboardEvent} from 'react';
+import React from 'react';
 import s from '../Profile.module.css';
+import {reduxForm, Field, InjectedFormProps} from "redux-form";
 
-type AddPostType = {
-    newPostText: string
-    updateNewPostText: (text: string) => void
-    createPost: () => void
+
+
+export type AddPostFormData = {
+    addPost: string
 }
 
-const AddPost = (props: AddPostType) => {
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        let text = e.currentTarget.value;
-        if (text) {
-            props.updateNewPostText(text);
-        }
-    };
-
-    let createPost = () => {
-        props.createPost()
-    };
-
-    const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            createPost();
-        }
-    };
-
-
+export const AddPost: React.FC<InjectedFormProps<AddPostFormData>> = (props) => {
     return (
-        <div className={s.newPost}>
-            <input onKeyPress={onKeyPressHandler} value={props.newPostText} onChange={onChangeHandler}/>
-            <button onClick={createPost}>Send</button>
-        </div>
-    );
+        <form onSubmit={props.handleSubmit}>
+            <Field name={'addPost'} component={'textarea'}/>
+            <button>Add post</button>
+        </form>
+    )
 };
+export const AddPostReduxForm = reduxForm<AddPostFormData>({
+    form: 'addPostForm'
+})(AddPost)
 
-export default AddPost;
+

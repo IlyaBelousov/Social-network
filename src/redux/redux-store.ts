@@ -1,12 +1,12 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import {
-    AddNewPostActionCreator,
+    AddNewPost,
     ChangeNewPostTextActionCreator,
     ProfileReducer,
     SetUserProfileActionCreator, SetUserStatus, UpdateUserStatus
 } from './profile-reducer';
-import {ChangeMessageTextActionType, DialogsReducer, SendMessageActionCreator} from './dialogs-reducer';
+import {DialogsReducer, SendMessageActionCreator} from './dialogs-reducer';
 import {
     FollowActionCreator, SetFollowInProgress,
     SetCurrentPage,
@@ -22,12 +22,11 @@ export type ActionsType = ProfileActionType
     | AuthActionType
 
 export type ProfileActionType =
-    ReturnType<typeof AddNewPostActionCreator>
+    ReturnType<typeof AddNewPost>
     | ReturnType<typeof ChangeNewPostTextActionCreator>
     | ReturnType<typeof SetUserProfileActionCreator>
 export type DialogsActionType =
     ReturnType<typeof SendMessageActionCreator>
-    | ReturnType<typeof ChangeMessageTextActionType>
     | ReturnType<typeof SetUserStatus>
     | ReturnType<typeof UpdateUserStatus>
 

@@ -13,8 +13,8 @@ const User = (props: UserPropsType) => {
         <div className={s.userBlock}>
             <div className={s.userAvatar}>
                 {
-                    props.photoUrl ?
-                        <img alt={'avatar'} src={props.photoUrl}/>
+                    props.photoUrl
+                        ? <img alt={'avatar'} src={props.photoUrl}/>
                         : <img alt={'avatar'}
                                src={'https://insights.mgm-tp.com/wp-content/uploads/2019/04/default-avatar.png'}/>
                 }

@@ -4,6 +4,7 @@ import ProfileInfo from './ProfileInfo';
 import MyPost from './Posts/MyPost';
 import {PostWrapper} from './Posts/PostsWrapper';
 import {
+    AddNewPost,
     SetUserProfileThunk,
     SetUserStatusThunk,
     UpdateUserStatusThunk,
@@ -16,6 +17,7 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 
 
+
 type PathParamsType = {
     userId: string | undefined
 }
@@ -23,6 +25,7 @@ export type MapDispatchToPropsType = {
     SetUserProfileThunk: (userId: number) => void
     SetUserStatusThunk: (userId: number) => void
     UpdateUserStatusThunk: (status: string) => void
+    AddNewPost:(newPost:string)=>void
 }
 type ProfileMapStateToPropsType = {
     isAuth: boolean
@@ -65,7 +68,7 @@ export class Profile extends React.Component<ProfilePropsType> {
                 contacts={this.props.contacts}
                 photo={this.props.userProfile.photos.small ? this.props.userProfile.photos.small : 'https://insights.mgm-tp.com/wp-content/uploads/2019/04/default-avatar.png'}/>
             <MyPost/>
-            <PostWrapper/>
+            <PostWrapper AddNewPost={this.props.AddNewPost}/>
         </div>;
     }
 }
@@ -83,7 +86,7 @@ const MapStateToProps = (state: AppStateType): ProfileMapStateToPropsType => {
 
 
 export const ProfileContainer = compose<React.ComponentType>(
-    connect(MapStateToProps, {SetUserProfileThunk, SetUserStatusThunk, UpdateUserStatusThunk}),
+    connect(MapStateToProps, {SetUserProfileThunk, SetUserStatusThunk, UpdateUserStatusThunk,AddNewPost}),
     withRouter,
 )(Profile);
 
