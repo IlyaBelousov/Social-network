@@ -1,32 +1,39 @@
-import {ActionsType} from './redux-store';
+import {ActionsType, AppStateType, AuthActionType} from './redux-store';
 import {Dispatch} from 'redux';
 import {authAPI} from '../api/api';
-
-const SET_AUTH_DATA = 'SET_AUTH_DATA';
+import {ThunkAction} from 'redux-thunk';
 
 
 export type AuthDataType = {
     userId: number | null
     email: string | null
     login: string | null
-    isAuth: boolean
+    isAuth: boolean,
+    isInitialised: boolean
 }
 
 let AuthInitialState: AuthDataType = {
     userId: null,
     email: null,
     login: null,
-    isAuth: false
+    isAuth: false,
+    isInitialised: false
 };
 
 export const AuthReducer = (state = AuthInitialState, action: ActionsType): AuthDataType => {
     switch (action.type) {
-        case SET_AUTH_DATA: {
+        case'AUTH/SET_AUTH_DATA': {
             return {
                 ...state,
                 ...action.data,
                 isAuth: true,
             };
+        }
+        case "AUTH/LOG_IN": {
+            return {
+                ...state,
+                isInitialised: action.isInitialised,
+            }
         }
         default:
             return state;
@@ -34,7 +41,7 @@ export const AuthReducer = (state = AuthInitialState, action: ActionsType): Auth
 };
 export const SetAuthData = (userId: number, email: string, login: string) => {
     return {
-        type: SET_AUTH_DATA,
+        type: 'AUTH/SET_AUTH_DATA',
         data: {
             userId,
             email,
@@ -42,6 +49,12 @@ export const SetAuthData = (userId: number, email: string, login: string) => {
         }
     } as const;
 };
+export const LogInAC = (isInitialised: boolean) => {
+    return {
+        type: 'AUTH/LOG_IN',
+        isInitialised,
+    } as const
+}
 export const SetAuthDataThunk = () => (dispatch: Dispatch) => {
     authAPI.me()
         .then(response => {
@@ -50,3 +63,13 @@ export const SetAuthDataThunk = () => (dispatch: Dispatch) => {
             }
         });
 };
+export const LogIn = (password: string, email: string, rememberMe?: boolean): ThunkAction<void, AppStateType, unknown, AuthActionType> =>
+    (dispatch) => {
+        authAPI.logIn(password, email, rememberMe)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(LogInAC(true))
+                    dispatch(SetAuthDataThunk())
+                }
+            })
+    }

@@ -9,7 +9,7 @@ import Message from './Message';
 import {connect} from 'react-redux';
 import {compose, Dispatch} from 'redux';
 import {
-    DialogsReducerInitialStateType,
+    DialogsReducerInitialStateType, MessageType,
     SendMessageActionCreator
 } from '../../redux/dialogs-reducer';
 import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
@@ -44,16 +44,24 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 type DialogItemType = {
     id: number
     username: string
+    messages?: MessageType[]
 }
 export const DialogItem = (props: DialogItemType) => {
-    return (
-        <div className={s.dialog}>
-            <NavLink to={'/dialogs/' + props.id} activeClassName={s.active} className={s.user}><User id={props.id}
-                                                                                                     photoUrl={'https://insights.mgm-tp.com/wp-content/uploads/2019/04/default-avatar.png'}
-                                                                                                     name={props.username}
+    return <div className={s.dialog}>
+        <NavLink to={'/dialogs/' + props.id} activeClassName={s.active} className={s.user}>
+            <User
+                key={props.id}
+                id={props.id}
+                photoUrl={'https://insights.mgm-tp.com/wp-content/uploads/2019/04/default-avatar.png'}
+                name={props.username}
             /></NavLink>
+        <div className={s.messages}>
+            {
+                props.messages?.map(m => <Message message={m.message}/>)
+            }
         </div>
-    );
+    </div>
+
 };
 
 
@@ -61,29 +69,17 @@ export const Dialogs = (props: DialogsType) => {
     const onSubmit = (messageData: AddMessageDataType) => {
         props.sendMessage(messageData.newMessageBody);
     }
-    return (
-        <div className={s.dialogsContainer}>
-            <div className={s.dialogItem}>
-                <div className={s.dialogUsers}>
-                    {props.dialogsPage.dialogs
-                        .map((t: DialogItemType) =>
-                            <DialogItem key={t.id} id={t.id}
-                                        username={t.username}/>)
-                    }
-                </div>
-                <div className={s.dialogMessage}>
-                    {props.dialogsPage.messages
-                        .map(m =>
-                            <Message key={m.id} message={m.message}/>
-                        )
-                    }
-                </div>
-            </div>
-            <div className={s.addMessage}>
-                <AddMessageReduxForm onSubmit={onSubmit}/>
-            </div>
+    return <div className={s.dialogsContainer}>
+        {props.dialogsPage.dialogs
+            .map((t: DialogItemType) => <DialogItem key={t.id} id={t.id}
+                                                    username={t.username}
+                                                    messages={t.messages}
+            />)
+        }
+        <div className={s.addMessage}>
+            <AddMessageReduxForm onSubmit={onSubmit}/>
         </div>
-    );
+    </div>
 };
 
 export const DialogsContainer = compose<React.ComponentType>(

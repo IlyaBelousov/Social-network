@@ -14,12 +14,12 @@ type ProfileInfoPropsType = {
     }
     fullName: string
     lookingForAJobDescription: string
-    status:string
+    status: string
     updateStatus: (status: string) => void
 }
 
 
-const ProfileInfo = (props: ProfileInfoPropsType) => {
+const ProfileInfo = React.memo((props: ProfileInfoPropsType) => {
     return (
         <div className={s.profileInformation}>
             <img src={props.photo}
@@ -34,6 +34,6 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
         </div>
 
     );
-};
+})
 
 export default ProfileInfo;

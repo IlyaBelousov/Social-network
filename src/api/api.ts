@@ -1,6 +1,18 @@
 import axios from 'axios';
 import {UserDataType} from '../redux/users-reducer';
 
+export interface IResponse<T> {
+    resultCode: number
+    messages: string[]
+    data: T
+}
+
+// type LoginRequestData = {
+//     password: string
+//     email: string
+//     rememberMe?: boolean
+// }
+
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
@@ -8,33 +20,38 @@ const instance = axios.create({
         'API-KEY': '4e9f6c7c-553d-4c3d-8aa0-0bbb01a71677'
     }
 });
+
 export const userAPI = {
-    GetUsers: (currentPage: number, pageSize: number) => {
+    GetUsers(currentPage: number, pageSize: number) {
         return instance.get<{ items: UserDataType[], totalCount: number }>(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => response.data);
     },
-    Follow: (id: number) => {
+    Follow(id: number) {
         return instance.post(`follow/${id}`);
     },
-    UnFollow: (id: number) => {
+    UnFollow(id: number) {
         return instance.delete(`follow/${id}`);
     }
 };
 export const profileAPI = {
-    GetUserProfile: (userId: number) => {
+    GetUserProfile(userId: number) {
         return instance.get(`profile/${userId}`);
     },
-    GetUserStatus: (userId: number) => {
+    GetUserStatus(userId: number) {
         return instance.get(`profile/status/${userId}`)
     },
-    UpdateStatus:(status:string)=>{
-        return instance.put(`profile/status`,{status})
+    UpdateStatus(status: string) {
+        return instance.put(`profile/status`, {status})
     }
 };
 export const authAPI = {
-    me: () => {
-        return instance.get<{ data: { id: number, email: string, login: string }, resultCode: number }>('auth/me');
+    me() {
+        return instance.get<IResponse<{ id: number, email: string, login: string }>>('auth/me');
+    },
+    logIn(password: string, email: string, rememberMe?: boolean) {
+        return instance.post<IResponse<{userId:number}>>(`auth/login`, {password, email, rememberMe})
     }
+
 };
 
 

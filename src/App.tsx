@@ -14,7 +14,6 @@ import {Login} from './Login/Login';
 function App() {
 
     return (
-
         <div className="container">
             <HeaderWithConnect/>
             <Navbar/>
@@ -31,7 +30,6 @@ function App() {
                 <Route path="/login" render={() => <Login/>}/>
             </div>
         </div>
-
     );
 }
 

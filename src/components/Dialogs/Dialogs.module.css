@@ -1,5 +1,6 @@
 .dialogsContainer {
-    height: 500px;
+    padding: 10px;
+    min-height: 500px;
     display: flex;
     background-color: #fdfdfd;
     border-radius: 8px 8px 8px 8px;
@@ -8,65 +9,44 @@
     align-content: center;
     flex-wrap: wrap;
     justify-content: space-around;
+    max-height: max-content;
 }
-
-.dialogItem {
-    display: grid;
-    grid-template-columns: 3fr 3fr;
-    grid-template-areas: 'u m';
-}
-
-
-.addMessage {
-    bottom: 0;
-    display: flex;
-    align-items: flex-end
-}
-
-.addMessage textarea {
-    width: 300px;
-    height: 40px;
-    margin-left: 100px;
-    resize: none;
-
-
-}
-
-.addMessage button {
-    width: 80px;
-    height: 45px;
-    bottom: 0;
-    margin-left: 10px;
-
+.dialogsContainer a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .dialog {
-
-    margin-top: 20px;
-    margin-left: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    max-height: max-content;
 }
-
-.dialogUsers {
-    display: grid;
-    grid-area: u;
-}
-
-.user {
-
-    text-decoration: none;
-    color: black;
-}
-
-.dialogMessage {
-    padding-top: 10px;
-    display: grid;
-    grid-area: m;
+.messages{
+    max-width: 300px;
 
 }
 
-.dialogItem .active {
+
+.dialog .active {
     color: gold;
-    font-size: 1.5em;
+    font-size: 1.3em;
 }
+.addMessageForm{
+    display: flex;
+    justify-content: center;
+}
+.addMessageForm textarea{
+    outline: none;
+    resize: none;
+    width: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.48);
+}
+.addMessageForm button{
+    width: 60px;
+}
+
+
 
 

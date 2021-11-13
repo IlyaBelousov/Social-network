@@ -21,7 +21,6 @@ export class HeaderContainer extends React.Component<HeaderPropsType> {
     componentDidMount() {
         this.props.SetAuthDataThunk()
     }
-
     render() {
         return <Header
             login={this.props.data.login}

@@ -13,12 +13,8 @@ function Header(props: PropsType) {
 
             <h2 className={s.title}>Social Network</h2>
             <div className={s.loginBlock}>
-                {
-                    props.isAuth ?
-                        props.login
-                        : <NavLink to={'/login'}>Login</NavLink>
-
-                }
+                {props.login&&props.login}
+                {props.login&&<button>LogOut</button>}
             </div>
         </header>
     );

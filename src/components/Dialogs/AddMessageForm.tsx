@@ -1,22 +1,23 @@
 import React from 'react';
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import s from './Dialogs.module.css'
+import {Field, Form, InjectedFormProps, reduxForm} from "redux-form";
 
-export type AddMessageDataType ={
-    newMessageBody:string
+export type AddMessageDataType = {
+    newMessageBody: string
 }
 
-export const AddMessageForm:React.FC<InjectedFormProps<AddMessageDataType>> = (props) => {
+export const AddMessageForm: React.FC<InjectedFormProps<AddMessageDataType>> = (props) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <Form className={s.addMessageForm} onSubmit={props.handleSubmit}>
             <Field
                 placeholder={'Enter your message'}
                 component={'textarea'}
-                name={'newMessageBody'} />
+                name={'newMessageBody'}/>
             <button>Send</button>
-        </form>
+        </Form>
     );
 };
 export const AddMessageReduxForm = reduxForm<AddMessageDataType>({
-    form:'dialogAddMessageForm'
+    form: 'dialogAddMessageForm'
 })(AddMessageForm)
 
