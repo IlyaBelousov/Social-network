@@ -1,5 +1,5 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import thunkMiddleware, {ThunkAction} from 'redux-thunk';
 import {
     AddNewPost,
     ChangeNewPostTextActionCreator,
@@ -50,6 +50,11 @@ let rootReducer = combineReducers({
     form: formReducer
 });
 export type AppStateType = ReturnType<typeof rootReducer>
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
+    AppStateType,
+    unknown,
+    ActionsType>
+
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 

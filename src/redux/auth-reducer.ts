@@ -1,7 +1,5 @@
 import {authAPI, AuthDataType} from "../api/api";
-import {Action, Dispatch} from "redux";
-import {ActionsType, AppStateType} from "./redux-store";
-import {ThunkAction} from "redux-thunk";
+import {ActionsType, AppThunk} from "./redux-store";
 
 
 const initialSate = {
@@ -50,34 +48,35 @@ export type AuthActionsType =
     | ReturnType<typeof setIsAuth>
 
 //thunk
-export const setAuthorization = () => (dispatch: Dispatch) => {
-    authAPI.me()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setAuthData(response.data.data.id, response.data.data.email, response.data.data.login))
-                dispatch(setIsAuth(true))
-            } else {
-                dispatch(setIsAuth(false))
-            }
-        })
+
+export const setAuthorization = (): AppThunk => async dispatch => {
+    const response = await authAPI.me()
+    try {
+        dispatch(setAuthData(response.data.data.id, response.data.data.email, response.data.data.login))
+        dispatch(setIsAuth(true))
+    } catch (e) {
+        dispatch(setIsAuth(false))
+    }
 }
-export const setLogIn =
-    (password: string, email: string, rememberMe?: boolean)
-        : ThunkAction<void, AppStateType, unknown, Action<AuthActionsType>> =>
-        (dispatch) => {
-    authAPI.logIn(password, email, rememberMe)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setAuthorization())
-            }
-        })
+export const setLogIn = (password: string, email: string, rememberMe?: boolean): AppThunk => async dispatch => {
+    try {
+        const response = await authAPI.logIn(password, email, rememberMe)
+        if (response.data.resultCode === 0) {
+            dispatch(setAuthorization())
+        }
+    } catch (e) {
+        throw new Error(e)
+    }
 }
-export const logOut = () => (dispatch: Dispatch) => {
-    authAPI.logOut()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setIsAuth(false))
-            }
-        })
+export const logOut = (): AppThunk => async dispatch => {
+    const response = await authAPI.logOut()
+    try {
+        if (response.data.resultCode === 0) {
+            dispatch(setIsAuth(false))
+        }
+    } catch (e) {
+        throw new Error(e)
+    }
+
 }
 

@@ -10,7 +10,7 @@ export type AddPostFormData = {
 
 export const AddPost: React.FC<InjectedFormProps<AddPostFormData>> = (props) => {
     return (
-        <Form onSubmit={props.handleSubmit}>
+        <Form className={s.postForm} onSubmit={props.handleSubmit}>
             <Field name={'addPost'} component={'textarea'}/>
             <button>Add post</button>
         </Form>

@@ -24,7 +24,6 @@ const ProfileInfo = React.memo((props: ProfileInfoPropsType) => {
         <div className={s.profileInformation}>
             <img src={props.photo}
                  className={s.profileImage}/>
-
             <div className={s.person}>
                 <h2 className={s.fullName}> {props.fullName}</h2>
                 <h4 className={s.personDescription}>{props.lookingForAJobDescription}</h4>

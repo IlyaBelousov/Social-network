@@ -2,7 +2,7 @@
     grid-area: p;
     background-color: #fdfdfd;
     border-radius: 8px 8px 8px 8px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
     padding: 2%;
 
 }
@@ -27,7 +27,8 @@
     display: flex;
     flex-direction: column;
 }
-.person h2{
+
+.person h2 {
     margin: 0;
 }
 
@@ -58,6 +59,7 @@
     padding: 4px 0;
     outline: 0;
 }
+
 .newPost button {
     width: 110px;
     height: 43px;
@@ -76,8 +78,13 @@
     margin-top: 30px;
     display: flex;
 }
-.status{
+
+.status {
     outline: none;
+}
+
+.postForm {
+    display: flex;
 }
 
 
