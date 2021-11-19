@@ -2,22 +2,22 @@ import React from 'react';
 import s from './Login.module.css';
 import {FormDataType, ReduxLoginForm} from './LoginForm';
 import {connect} from "react-redux";
-import {LogIn, SetAuthDataThunk} from "../redux/auth-reducer";
+
 import {AppStateType} from "../redux/redux-store";
 import {Redirect} from "react-router-dom";
+import {setLogIn} from "../redux/auth-reducer";
 
 type MapStateToPropsType = {
-    isInitialised: boolean
+    isAuth: boolean
 }
 type MapDispatchToPropsType = {
-    LogIn: (password: string, email: string, rememberMe?: boolean) => void
-    SetAuthDataThunk: () => void
+    setLogIn: (password: string, email: string, rememberMe?: boolean) => void
 }
 const LoginContainer = (props: MapDispatchToPropsType & MapStateToPropsType) => {
     const onSubmit = (formData: FormDataType) => {
-       props.LogIn(formData.password, formData.login, formData.rememberMe)
+        props.setLogIn(formData.password, formData.login, formData.rememberMe)
     };
-    if (props.isInitialised) {
+    if (props.isAuth) {
         return <Redirect to={'/profile'}/>
     }
     return <div className={s.loginContainer}>
@@ -27,9 +27,9 @@ const LoginContainer = (props: MapDispatchToPropsType & MapStateToPropsType) => 
 };
 const MapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        isInitialised: state.auth.isInitialised
+        isAuth: state.auth.isAuth
     }
 }
-export const Login = connect(MapStateToProps, {LogIn, SetAuthDataThunk})(LoginContainer)
+export const Login = connect(MapStateToProps, {setLogIn})(LoginContainer)
 
 

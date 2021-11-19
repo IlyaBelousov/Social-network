@@ -1,75 +1,83 @@
-import {ActionsType, AppStateType, AuthActionType} from './redux-store';
-import {Dispatch} from 'redux';
-import {authAPI} from '../api/api';
-import {ThunkAction} from 'redux-thunk';
+import {authAPI, AuthDataType} from "../api/api";
+import {Action, Dispatch} from "redux";
+import {ActionsType, AppStateType} from "./redux-store";
+import {ThunkAction} from "redux-thunk";
 
 
-export type AuthDataType = {
-    userId: number | null
-    email: string | null
-    login: string | null
-    isAuth: boolean,
-    isInitialised: boolean
-}
-
-let AuthInitialState: AuthDataType = {
-    userId: null,
-    email: null,
-    login: null,
+const initialSate = {
     isAuth: false,
-    isInitialised: false
-};
-
-export const AuthReducer = (state = AuthInitialState, action: ActionsType): AuthDataType => {
+    data: {} as AuthDataType
+}
+type authInitialStateType = typeof initialSate
+export const authReducer = (state: authInitialStateType = initialSate, action: ActionsType): authInitialStateType => {
     switch (action.type) {
-        case'AUTH/SET_AUTH_DATA': {
+        case 'AUTH/SET_AUTH_DATA': {
             return {
                 ...state,
-                ...action.data,
-                isAuth: true,
-            };
-        }
-        case "AUTH/LOG_IN": {
-            return {
-                ...state,
-                isInitialised: action.isInitialised,
+                data: {...action.payload}
             }
         }
-        default:
-            return state;
+        case 'AUTH/SET_IS_AUTH': {
+            return {
+                ...state,
+                isAuth: action.isAuth
+            }
+        }
+        default: {
+            return state
+        }
     }
-};
-export const SetAuthData = (userId: number, email: string, login: string) => {
+}
+//actions
+export const setAuthData = (id: number, email: string, login: string) => {
     return {
         type: 'AUTH/SET_AUTH_DATA',
-        data: {
-            userId,
+        payload: {
+            id,
             email,
             login
         }
-    } as const;
-};
-export const LogInAC = (isInitialised: boolean) => {
-    return {
-        type: 'AUTH/LOG_IN',
-        isInitialised,
     } as const
 }
-export const SetAuthDataThunk = () => (dispatch: Dispatch) => {
+export const setIsAuth = (isAuth: boolean) => {
+    return {
+        type: 'AUTH/SET_IS_AUTH',
+        isAuth
+    } as const
+}
+export type AuthActionsType =
+    ReturnType<typeof setAuthData>
+    | ReturnType<typeof setIsAuth>
+
+//thunk
+export const setAuthorization = () => (dispatch: Dispatch) => {
     authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(SetAuthData(response.data.data.id, response.data.data.email, response.data.data.login));
+                dispatch(setAuthData(response.data.data.id, response.data.data.email, response.data.data.login))
+                dispatch(setIsAuth(true))
+            } else {
+                dispatch(setIsAuth(false))
             }
-        });
-};
-export const LogIn = (password: string, email: string, rememberMe?: boolean): ThunkAction<void, AppStateType, unknown, AuthActionType> =>
-    (dispatch) => {
-        authAPI.logIn(password, email, rememberMe)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(LogInAC(true))
-                    dispatch(SetAuthDataThunk())
-                }
-            })
-    }
+        })
+}
+export const setLogIn =
+    (password: string, email: string, rememberMe?: boolean)
+        : ThunkAction<void, AppStateType, unknown, Action<AuthActionsType>> =>
+        (dispatch) => {
+    authAPI.logIn(password, email, rememberMe)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setAuthorization())
+            }
+        })
+}
+export const logOut = () => (dispatch: Dispatch) => {
+    authAPI.logOut()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setIsAuth(false))
+            }
+        })
+}
+

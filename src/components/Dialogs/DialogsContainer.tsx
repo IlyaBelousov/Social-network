@@ -22,14 +22,12 @@ type DialogsType = {
     & DialogsMapStateToPropsType
 type DialogsMapStateToPropsType = {
     dialogsPage: DialogsReducerInitialStateType
-    isAuth: boolean
 }
 
 
 const MapStateToProps = (state: AppStateType): DialogsMapStateToPropsType => {
     return {
         dialogsPage: state.dialogsPage,
-        isAuth: state.auth.isAuth
     };
 };
 const mapDispatchToProps = (dispatch: Dispatch) => {

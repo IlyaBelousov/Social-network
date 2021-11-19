@@ -6,16 +6,17 @@ import './index.css';
 import {store} from './redux/redux-store';
 import {Provider} from 'react-redux';
 
-    ReactDOM.render(
-        <BrowserRouter>
-            <Provider store={store}>
-                <React.StrictMode>
-                    <App/>
-                </React.StrictMode>
-            </Provider>
-        </BrowserRouter>,
-        document.getElementById('root')
-    );
+ReactDOM.render(
+    <Provider store={store}>
+        <React.StrictMode>
+            <BrowserRouter basename={'/Social-network'}>
+                <App/>
+            </BrowserRouter>
+        </React.StrictMode>
+    </Provider>
+    ,
+    document.getElementById('root')
+);
 
 
 

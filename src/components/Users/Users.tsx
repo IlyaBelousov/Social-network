@@ -9,11 +9,9 @@ import {Preloader} from '../../common/Preloader';
 import {NavLink} from 'react-router-dom';
 
 
-
 type UsersPropsType = UsersMapStateToPropsType & UsersMapDispatchToPropsType
 
 type UsersMapStateToPropsType = {
-    isAuth:boolean
     items: Array<UserDataType>
     pageSize: number
     totalCount: number
@@ -95,7 +93,6 @@ export class Users extends React.Component<UsersPropsType> {
 
 export const UsersMapStateToProps = (state: AppStateType): UsersMapStateToPropsType => {
     return {
-        isAuth:state.auth.isAuth,
         items: state.usersPage.items,
         pageSize: state.usersPage.pageSize,
         totalCount: state.usersPage.totalCount,

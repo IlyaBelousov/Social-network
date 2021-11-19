@@ -2,37 +2,37 @@ import React from 'react';
 import Header from './Header';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
-import {SetAuthDataThunk} from '../../redux/auth-reducer';
+import {setAuthorization} from "../../redux/auth-reducer";
+import {Redirect} from "react-router-dom";
+
 
 type MapStateToPropsType = {
-    data: {
-        userId: number | null
-        email: string | null
-        login: string | null
-    },
     isAuth: boolean
+    login: string | undefined
 }
 type MapDispatchToPropsType = {
-    SetAuthDataThunk: () => void
+    setAuthorization: () => void
 }
 type HeaderPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 export class HeaderContainer extends React.Component<HeaderPropsType> {
     componentDidMount() {
-        this.props.SetAuthDataThunk()
+        this.props.setAuthorization()
     }
+
     render() {
         return <Header
-            login={this.props.data.login}
-            isAuth={this.props.isAuth}/>;
+            isAuth={this.props.isAuth}
+            login={this.props.login}/>
     }
 }
 
-const MapStateToProps = (state: AppStateType): MapStateToPropsType => {
+const MapStateToProps = (state: AppStateType) => {
     return {
-        data: state.auth,
+        login: state.auth.data.login,
         isAuth: state.auth.isAuth
     };
 };
 
-export const HeaderWithConnect = connect(MapStateToProps, {SetAuthDataThunk})(HeaderContainer);
+
+export const HeaderWithConnect = connect(MapStateToProps, {setAuthorization})(HeaderContainer);

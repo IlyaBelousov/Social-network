@@ -1,17 +1,17 @@
 import axios from 'axios';
 import {UserDataType} from '../redux/users-reducer';
 
+export type AuthDataType = {
+    id: number
+    email: string
+    login: string
+}
+
 export interface IResponse<T> {
     resultCode: number
     messages: string[]
     data: T
 }
-
-// type LoginRequestData = {
-//     password: string
-//     email: string
-//     rememberMe?: boolean
-// }
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -46,10 +46,13 @@ export const profileAPI = {
 };
 export const authAPI = {
     me() {
-        return instance.get<IResponse<{ id: number, email: string, login: string }>>('auth/me');
+        return instance.get<IResponse<AuthDataType>>('auth/me');
     },
     logIn(password: string, email: string, rememberMe?: boolean) {
-        return instance.post<IResponse<{userId:number}>>(`auth/login`, {password, email, rememberMe})
+        return instance.post<IResponse<{ userId: number }>>(`auth/login`, {password, email, rememberMe})
+    },
+    logOut() {
+        return instance.delete<IResponse<{}>>('auth/login')
     }
 
 };

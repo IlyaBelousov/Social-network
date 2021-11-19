@@ -16,8 +16,6 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 
 
-
-
 type PathParamsType = {
     userId: string | undefined
 }
@@ -25,10 +23,10 @@ export type MapDispatchToPropsType = {
     SetUserProfileThunk: (userId: number) => void
     SetUserStatusThunk: (userId: number) => void
     UpdateUserStatusThunk: (status: string) => void
-    AddNewPost:(newPost:string)=>void
+    AddNewPost: (newPost: string) => void
 }
 type ProfileMapStateToPropsType = {
-    isAuth: boolean
+
     userProfile: UserProfileType
     contacts: {
         github: string
@@ -40,7 +38,7 @@ type ProfileMapStateToPropsType = {
     }
     fullName: string
     lookingForAJobDescription: string
-    status:string
+    status: string
 }
 
 
@@ -75,18 +73,18 @@ export class Profile extends React.Component<ProfilePropsType> {
 
 const MapStateToProps = (state: AppStateType): ProfileMapStateToPropsType => {
     return {
-        isAuth: state.auth.isAuth,
+
         userProfile: state.profilePage.userProfile,
         contacts: state.profilePage.userProfile.contacts,
         fullName: state.profilePage.userProfile.fullName,
         lookingForAJobDescription: state.profilePage.userProfile.lookingForAJobDescription,
-        status:state.profilePage.userProfile.status
+        status: state.profilePage.userProfile.status
     };
 };
 
 
 export const ProfileContainer = compose<React.ComponentType>(
-    connect(MapStateToProps, {SetUserProfileThunk, SetUserStatusThunk, UpdateUserStatusThunk,AddNewPost}),
+    connect(MapStateToProps, {SetUserProfileThunk, SetUserStatusThunk, UpdateUserStatusThunk, AddNewPost}),
     withRouter,
 )(Profile);
 

@@ -13,13 +13,14 @@ import {
     SetToggleIsFetching, SetTotalUsersCount, SetUsers,
     UsersReducer, UnFollowActionCreator,
 } from './users-reducer';
-import {AuthReducer, LogInAC, SetAuthData} from './auth-reducer';
 import {reducer as formReducer} from 'redux-form';
+import {AuthActionsType, authReducer} from "./auth-reducer";
 
 export type ActionsType = ProfileActionType
     | DialogsActionType
     | UsersActionType
-    | AuthActionType
+    | AuthActionsType
+
 
 export type ProfileActionType =
     ReturnType<typeof AddNewPost>
@@ -40,13 +41,12 @@ export type UsersActionType =
     | ReturnType<typeof UnFollowActionCreator>
     | ReturnType<typeof SetFollowInProgress>
 
-export type AuthActionType = ReturnType<typeof SetAuthData>|ReturnType<typeof LogInAC>
 
 let rootReducer = combineReducers({
     profilePage: ProfileReducer,
     dialogsPage: DialogsReducer,
     usersPage: UsersReducer,
-    auth: AuthReducer,
+    auth: authReducer,
     form: formReducer
 });
 export type AppStateType = ReturnType<typeof rootReducer>
