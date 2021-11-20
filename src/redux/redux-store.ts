@@ -15,11 +15,13 @@ import {
 } from './users-reducer';
 import {reducer as formReducer} from 'redux-form';
 import {AuthActionsType, authReducer} from "./auth-reducer";
+import {AppActionsType, appReducer} from "./app-reducer";
 
 export type ActionsType = ProfileActionType
     | DialogsActionType
     | UsersActionType
     | AuthActionsType
+    | AppActionsType
 
 
 export type ProfileActionType =
@@ -47,6 +49,7 @@ let rootReducer = combineReducers({
     dialogsPage: DialogsReducer,
     usersPage: UsersReducer,
     auth: authReducer,
+    app: appReducer,
     form: formReducer
 });
 export type AppStateType = ReturnType<typeof rootReducer>

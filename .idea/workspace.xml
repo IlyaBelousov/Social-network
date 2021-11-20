@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bbcb8444-ab99-4f3d-a2fa-73c1bd521b96" name="Default Changelist" comment="Login flow">
+    <list default="true" id="bbcb8444-ab99-4f3d-a2fa-73c1bd521b96" name="Default Changelist" comment="Thunk typing">
+      <change afterPath="$PROJECT_DIR$/src/redux/app-reducer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/Posts/AddPost.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Posts/AddPost.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/Profile.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Profile.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/ProfileInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/ProfileInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header/HeaderContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header/HeaderContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/auth-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/auth-reducer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/redux-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/redux-store.ts" afterDir="false" />
     </list>
@@ -131,7 +133,9 @@
       <workItem from="1634412689207" duration="4018000" />
       <workItem from="1636825193840" duration="15780000" />
       <workItem from="1637160092274" duration="880000" />
-      <workItem from="1637236602340" duration="26594000" />
+      <workItem from="1637236602340" duration="27964000" />
+      <workItem from="1637396960270" duration="459000" />
+      <workItem from="1637397842761" duration="4401000" />
     </task>
     <task id="LOCAL-00001" summary="Connect, shallow copy,deep copy">
       <created>1626466737786</created>
@@ -238,7 +242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637315832784</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Thunk typing">
+      <created>1637331153288</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1637331153288</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,7 +281,8 @@
     <MESSAGE value="HTTP put, profile status, componentDidUpdate" />
     <MESSAGE value="Redux-form" />
     <MESSAGE value="Login flow" />
-    <option name="LAST_COMMIT_MESSAGE" value="Login flow" />
+    <MESSAGE value="Thunk typing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Thunk typing" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

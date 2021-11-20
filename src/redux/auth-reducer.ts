@@ -49,20 +49,22 @@ export type AuthActionsType =
 
 //thunk
 
-export const setAuthorization = (): AppThunk => async dispatch => {
-    const response = await authAPI.me()
-    try {
-        dispatch(setAuthData(response.data.data.id, response.data.data.email, response.data.data.login))
-        dispatch(setIsAuth(true))
-    } catch (e) {
-        dispatch(setIsAuth(false))
-    }
+export const setAuthorization = (): AppThunk<Promise<unknown>> => dispatch => {
+    return authAPI.me()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setAuthData(response.data.data.id, response.data.data.email, response.data.data.login))
+                dispatch(setIsAuth(true))
+            } else {
+                dispatch(setIsAuth(false))
+            }
+        })
 }
 export const setLogIn = (password: string, email: string, rememberMe?: boolean): AppThunk => async dispatch => {
     try {
         const response = await authAPI.logIn(password, email, rememberMe)
         if (response.data.resultCode === 0) {
-            dispatch(setAuthorization())
+            await dispatch(setAuthorization())
         }
     } catch (e) {
         throw new Error(e)

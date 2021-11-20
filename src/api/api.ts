@@ -7,7 +7,7 @@ export type AuthDataType = {
     login: string
 }
 
-export interface IResponse<T> {
+export interface IResponse<T={}> {
     resultCode: number
     messages: string[]
     data: T
@@ -52,7 +52,7 @@ export const authAPI = {
         return instance.post<IResponse<{ userId: number }>>(`auth/login`, {password, email, rememberMe})
     },
     logOut() {
-        return instance.delete<IResponse<{}>>('auth/login')
+        return instance.delete<IResponse>('auth/login')
     }
 
 };
