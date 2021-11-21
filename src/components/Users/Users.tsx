@@ -2,23 +2,14 @@ import React from 'react';
 import User from './User';
 import s from './User.module.css';
 import {AppStateType} from '../../redux/redux-store';
-import {
-    UserDataType
-} from '../../redux/users-reducer';
 import {Preloader} from '../../common/Preloader';
 import {NavLink} from 'react-router-dom';
+import {usersSelector} from "../../redux/users-selector";
 
 
 type UsersPropsType = UsersMapStateToPropsType & UsersMapDispatchToPropsType
 
-type UsersMapStateToPropsType = {
-    items: Array<UserDataType>
-    pageSize: number
-    totalCount: number
-    currentPage: number
-    isFetching: boolean
-    followInProgress: number[]
-}
+
 type UsersMapDispatchToPropsType = {
     FollowThunk: (id: number) => void
     UnFollowThunk: (id: number) => void
@@ -91,13 +82,14 @@ export class Users extends React.Component<UsersPropsType> {
 }
 
 
-export const UsersMapStateToProps = (state: AppStateType): UsersMapStateToPropsType => {
+export const UsersMapStateToProps = (state: AppStateType) => {
     return {
-        items: state.usersPage.items,
-        pageSize: state.usersPage.pageSize,
-        totalCount: state.usersPage.totalCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followInProgress: state.usersPage.followInProgress,
+        items: usersSelector.getUsers(state),
+        pageSize: usersSelector.getPageSize(state),
+        totalCount: usersSelector.getTotalCount(state),
+        currentPage: usersSelector.getCurrentPage(state),
+        isFetching: usersSelector.getIsFetching(state),
+        followInProgress: usersSelector.getFollowInProgress(state),
     };
 };
+type UsersMapStateToPropsType = ReturnType<typeof UsersMapStateToProps>

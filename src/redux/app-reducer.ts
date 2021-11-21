@@ -28,7 +28,6 @@ export type AppActionsType = ReturnType<typeof initialisedSucceeded> | AuthActio
 //thunk
 
 export const initialiseApp = (): AppThunk => (dispatch) => {
-   debugger
     const response = dispatch(setAuthorization())
     response.then(() => {
         dispatch(initialisedSucceeded())

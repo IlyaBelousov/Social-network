@@ -50,7 +50,6 @@ class App extends React.Component<AppPropsType> {
 }
 
 const MapStateToProps = (state: AppStateType) => {
-    debugger
     return {
         isInitialised: state.app.isInitialised
     };
